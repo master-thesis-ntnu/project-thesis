@@ -1,0 +1,13 @@
+# Latex files
+*.acn
+*.fls
+*.ist
+*.fdb_latexmk
+*.glsdefs
+*.pdf
+*.log
+*.out
+*.toc
+*.aux
+*.bbl
+*.blg
