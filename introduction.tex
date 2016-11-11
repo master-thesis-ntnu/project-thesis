@@ -1,4 +1,27 @@
 \chapter{Introduction}
 \section{Motivation}
+Personalized search are used by multiple companies with a different degree of complexity.
+Spotify offers Discover Weekly, Netflix when suggesting new movies, Amazon shopping cart recommendation.
+
+User retention. Personalized content generates higher user retention degree. [find reference for this statement].
+
+Today's services are not able to handle cold starts.
+Services like Netflix and Amazon needs time and user data to generate user profiles to be used in personalization. [Maybe not relevant]
+
+User is able to notice latency which is greater than 100 ms. It is therefore important to deliver results within 100 ms.
+Google did experiments on users with different latencies. Users which experienced a latency of 0.5 second, generated 20\% less traffic.
+
+An earlier master thesis on this topic implemented a recommendation engine which was able to give better search recommendations.
+However the implemented solution experienced a latency of up to 600 ms.
+In this thesis we will explore the possibility to reduce the search latency to beneath the 100 ms mark. [Instant, personalized search recommendations]
+
 \section{Problem specification}
+
+\begin{enumerate}
+  \item How to provide instant personalized recommendations on a cold start based on the query typed?
+  \item Does the personalized recommendations give better results for the user?
+  \item How to make the search recommandation scale with an increasing amount of users?
+  \item How to provide search recommendations within 100ms?
+\end{enumerate}
+
 \section{Structure}
