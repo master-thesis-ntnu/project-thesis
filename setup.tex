@@ -14,6 +14,15 @@
 \usepackage{float} %used to properly place float-objects (figures)
 \usepackage[T1]{fontenc}
 \usepackage{titlesec, blindtext, color}
+
+% Needed to fix titlesec bug
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\ttlh@hang}{\parindent\z@}{\parindent\z@\leavevmode}{}{}
+\patchcmd{\ttlh@hang}{\noindent}{}{}{}
+\makeatother
+% Needed to fix titlesec bug
+
 %\usepackage[norsk]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{tabularx,ragged2e,booktabs,caption}
@@ -22,6 +31,7 @@
 \usepackage[toc,page]{appendix}
 \usepackage{url}
 \usepackage{amsmath}
+\usepackage{calc}
 
 %% Add acronym package
 \usepackage[acronym,nomain]{glossaries}
@@ -115,4 +125,5 @@
     urlcolor=black
 }
 
+%\titleformat{\subsection}{\normalsize\bfseries\itshape}{\textnormal{\roman{subsection}.}}{1em}{}
 \titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hsp\textcolor{gray75}{|}\hsp}{0pt}{\Huge\bfseries}
