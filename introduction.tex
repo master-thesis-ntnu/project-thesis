@@ -1,26 +1,29 @@
 \chapter{Introduction}
 \section{Motivation}
-Personalized search are used by multiple companies with a different degree of complexity.
-Spotify offers Discover Weekly, Netflix when suggesting new movies, Amazon shopping cart recommendation.
+[Maby mention something about todays search engines?]
 
-User retention. Personalized content generates higher user retention degree. [find reference for this statement].
+Today an increasing number of software companies try to personalize their services.
+A few examples of personalized services are Facebook's news feed, Netfix's movie suggestion and Spotifi's Discover Weekly.
 
-Today's services are not able to handle cold starts.
-Services like Netflix and Amazon needs time and user data to generate user profiles to be used in personalization. [Maybe not relevant]
+In research done by Google \cite{google-latency} they found that a latency of 100ms or less is required for interactive tasks.
+As a result search engines most deliver results back to the user within 100ms, or else the user is most likely to abondon the website.
 
-User is able to notice latency which is greater than 100 ms. It is therefore important to deliver results within 100 ms.
-Google did experiments on users with different latencies. Users which experienced a latency of 0.5 second, generated 20\% less traffic.
+This project thesis is based on the work done in the master thesis \textit{Instant, Personalized Search Recommandation} by Juul Arthur R Rudihagen \cite{master-thesis}.
+In the master thesis Rudihagen researched how an instant personalized search could be achieved.
+The research achieved a personalized search.
+However, several of the search implemantations exceeded the limit of 100ms, as stated in the master thesis by Rudihagen \cite[sec 6.6]{master-thesis}.
 
-An earlier master thesis on this topic implemented a recommendation engine which was able to give better search recommendations.
-However the implemented solution experienced a latency of up to 600 ms.
-In this thesis we will explore the possibility to reduce the search latency to beneath the 100 ms mark. [Instant, personalized search recommendations]
+This project thesis examines how a fast and scaleable search may be achieved, with the research done by Rudihagen as a baseline.
+His search implementations had limits towards latency and scalability.
+A major part of the latency came from multiple round trips from the webserver to the database and the search engine.
 
 \section{Problem specification}
+This project thesis tries to answer the research question below:
 
 \begin{enumerate}
   \item How to provide instant personalized recommendations on a cold start based on the query typed?
   \item Does the personalized recommendations give better results for the user?
-  \item How to make the search recommandation scale with an increasing amount of users?
+  \item How to make the search recommandation scale with an increasing amount of data?
   \item How to provide search recommendations within 100ms?
 \end{enumerate}
 
