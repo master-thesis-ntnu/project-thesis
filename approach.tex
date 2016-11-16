@@ -1,8 +1,9 @@
 \chapter{Approach}
+\label{ch:approach}
 This chapter describes how the search was conducted and all the assumptions which were taken.
 
 \section{Experiment Setup}
-With this project thesis the main goal was to achieve lower latency and better scaleability compared to the master thesis done by Rudihagen \cite{master-thesis}.
+One of the main goal in this project thesis was to achieve lower latency and better scaleability compared to the KL search implemented in the master thesis done by Rudihagen \cite{master-thesis}.
 The experiment's performance measure was latency.
 
 Figure \ref{fig:sequence-diagram-search} shows the experiments sequence diagram.
@@ -15,7 +16,12 @@ An aggregation is added to the query as the data is needed later to calculate th
 From Elasticsearch all the top k documents are returned together with an hashtag aggregation.
 The aggregation contains each hashtag with its corresponding document count.
 However this count are all the occurences of the hashtag, and not the count of the top k document.
-Hashtag count from the top k documents are obtained by traversing all the returned photos.
+Hashtag count from the top k documents are calculated from the returned photos.
+Using Equation \ref{kl-distance-sym} all hashtags are scored.
+The top 10 hashtags are used as search terms.
+
+After calculating the new search terms, a new query are sent to Elasticsearch.
+The result from the second query are sent directly to back to the user.
 
 [Add Elasticsearch initial result query]
 [Add elasticsearch query]

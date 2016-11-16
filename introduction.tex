@@ -18,13 +18,18 @@ His search implementations had limits towards latency and scalability.
 A major part of the latency came from multiple round trips from the webserver to the database and the search engine.
 
 \section{Problem specification}
-This project thesis tries to answer the research question below:
+This project thesis tries to answer the research questions below, with the main focus being research question \ref{rq:scaling} and \ref{rq:latency}.
 
 \begin{enumerate}
   \item How to provide instant personalized recommendations on a cold start based on the query typed?
   \item Does the personalized recommendations give better results for the user?
-  \item How to make the search recommandation scale with an increasing amount of data?
-  \item How to provide search recommendations within 100ms?
+  \item\label{rq:scaling} How to make the search recommandation scale with an increasing amount of data?
+  \item\label{rq:latency} How to provide search recommendations within 100ms?
 \end{enumerate}
 
 \section{Structure}
+Chapter \ref{ch:background} \\
+Chapter \ref{ch:related-work} \\
+Chapter \ref{ch:approach} \\
+Chapter \ref{ch:evaluation} \\
+Chapter \ref{ch:conclusion}
