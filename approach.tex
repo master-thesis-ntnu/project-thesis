@@ -1,7 +1,36 @@
 \chapter{Approach}
+This chapter describes how the search was conducted and all the assumptions which were taken.
 
 \section{Experiment Setup}
+With this project thesis the main goal was to achieve lower latency and better scaleability compared to the master thesis done by Rudihagen \cite{master-thesis}.
+The experiment's performance measure was latency.
+
+Figure \ref{fig:sequence-diagram-search} shows the experiments sequence diagram.
+First the a HTTP request arrives the web server.
+The search terms are extracted and from the users query.
+In this experiment, the extracted terms are searched against photo hastags.
+The query sent to Elasticsearch can be seen in Appendix \ref{es-query-inital-search}.
+An aggregation is added to the query as the data is needed later to calculate the KL score.
+
+From Elasticsearch all the top k documents are returned together with an hashtag aggregation.
+The aggregation contains each hashtag with its corresponding document count.
+However this count are all the occurences of the hashtag, and not the count of the top k document.
+Hashtag count from the top k documents are obtained by traversing all the returned photos.
+
+[Add Elasticsearch initial result query]
+[Add elasticsearch query]
+[Add photo data structure]
+
+\begin{figure}[h!]
+\centering \includegraphics[width=0.9\linewidth]{img/sequence-diagram-search.png}
+\caption{Sequence diagram for the search experiment}
+\label{fig:sequence-diagram-search}
+\end{figure}
 
 \section{Result}
+Measuring document relevance from users were never done as the main focus was latency and scaleability.
+
+Latency was measure from the webserver recieved the request, to the server responded the user's request.
+The round trip time from the webserver to the user is not taken into account.
 
 \section{Discussion}
