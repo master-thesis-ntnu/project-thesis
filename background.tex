@@ -87,10 +87,14 @@ When searching multiple terms the search Lucene are using multiple techniques: b
 
 \section{Query Expansion}
 [Write about Query expansion]
-Often the user's search is imprecise.
-To aid the user when search
+The idea behind query expansion is to add more terms to the users query, and then use the extended query on the search engine.
+According to literature a query expanded search does improve the results \cite[ch. 5]{ir-book}.
+Even though research shows promissing results, query expansions require explicit information which in practice often is difficult to acquire.
+But according to Efron \cite{ir-hashtag} hashtags provides an excellent way of acquire the explicit information needed for query expansions
 
-\subsection{Kullback-Leibler}
+There exists different method of query expansion and this thesis describes two techniques called Kullback-Leibler divergence and Rochio standard equation.
+
+\subsection{Kullback-Leibler Divergence}
 Kullback-Leibler divergence measures how well distribution P represents the distrubution Q.
 
 % Kullback-Leibler Distance Equation
