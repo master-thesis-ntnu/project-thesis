@@ -14,17 +14,68 @@ Elasticsearch is open source and built on top of Lucene \footnote{\url{https://l
 Lucene is the search engine itself,
 and Elasticsearch provides functionality for distribution and a REST API interface.
 
-\section{Search Engine (Elasticsearch)}
+\section{Search Engine}
 This section describes how Elasticsearch scores its documents and is based on the documentation found on the website \cite{elasticsearch-scoring}.
 The following subsections are needed to understand how the end result is determined, when using a term search in Elasticsearch.
 
+[talk about IR book] \cite{ir-book}
+
 \subsection{Term Frequency}
+Term frequency is the number of times a term is mentioned in a document.
+A document containing a term multiple times is probably more relevant than a document containing fewer occurences.
+However, in this thesis a term is only present one time in each document, and the reason is described in greater detail in Chapter \ref{ch:approach}.
+Term frequency calculation is given by Equation \ref{eq:term-frequency}.
+
+\begin{cequation}[H]
+	\begin{equation}
+		\mathbf{tf} = \sqrt{frequency}
+	\end{equation}
+	\caption{Term frequency calculation in Elasticsearch}
+  \label{eq:term-frequency}
+\end{cequation}
 
 \subsection{Inverse Document Frequency}
+Inverse document frequency discribes how many times a term is present in all the documents.
+Terms with high frequencies is often less relevant.
+E.g. the terms "a" and "an" often appears in a sentence but should be the documents a high score.
 
-\subsection{Field Length Norm}
 
-\subsection{Lucene Scoring Function}
+\begin{cequation}[H]
+	\begin{equation}
+		\mathbf{idf} = 1 + \log{[\frac{numDocs}{docFrequency + 1}]}
+	\end{equation}
+	\caption{Inverse Document Frequency calculation in Elasticsearch}
+  \label{eq:idf}
+\end{cequation}
+
+\subsection{Document Normalization}
+
+\begin{cequation}[H]
+	\begin{equation}
+		\mathbf{normalization} = \frac{1}{\sqrt{numTerms}}
+	\end{equation}
+	\caption{Normalization}
+  \label{eq:normalization}
+\end{cequation}
+
+\subsection{Document Score}
+\label{sec:doc-score}
+After calculating term frequency, inverse document frequency and document normalization all the factors are multiplied together.
+A documents score in Elasticsearch is given by the Equation \ref{eq:document-score}.
+
+\begin{cequation}[H]
+	\begin{equation}
+		\mathbf{documentScore} = tf \times idf \times normalization
+	\end{equation}
+	\caption{Final document score}
+  \label{eq:document-score}
+\end{cequation}
+
+\subsection{Multiple term query}
+The document score function described in Section \ref{sec:doc-score} is only used when searching for a single term.
+When searching multiple terms the search Lucene are using multiple techniques: boolean model, TF/IDF and vector space model.
+
+
 \url{http://lucene.apache.org/core/3_0_3/api/core/org/apache/lucene/search/Similarity.html}
 \begin{cequation}[H]
 	\begin{equation}
@@ -39,8 +90,8 @@ The following subsections are needed to understand how the end result is determi
 Often the user's search is imprecise.
 To aid the user when search
 
+\subsection{Kullback-Leibler}
 Kullback-Leibler divergence measures how well distribution P represents the distrubution Q.
-
 
 % Kullback-Leibler Distance Equation
 \begin{cequation}[H]
@@ -51,3 +102,5 @@ Kullback-Leibler divergence measures how well distribution P represents the dist
 	\caption{Kullback-Leibler Distance}
   \label{kl-distance}
 \end{cequation}
+
+\subsection{Rochio Standard Equation}
