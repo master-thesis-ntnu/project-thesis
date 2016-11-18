@@ -7,7 +7,19 @@ Twitter’s query suggestion engine \cite{twitter-suggestion} returns the most t
 Twitter have low latency requirements, however the query suggestion is not personalized in the same way as this project thesis tries to achieve.
 
 \section{Fuzzy Search}
-Levenshtein distance.
+A studdy found that 50\% of users reformulate their queries, and close to a third of these users reformulated their query three times or more \cite{query-reformulate}[This should be moved to a different section].
+With a standard term search the user has to spell the term correct, a misspelled term will most likely yield no or few results.
+E.g the term "blu" should also retrieve results on the term "blue."
+To handle this problem a technique called fuzzy search may be used.
+
+A commonly used method with fuzzy search is Levenshtein distance.
+Levenshtein distance calculates the number of characters edits which are required to transform one string into another.
+Editting a string includes substitution, insertion and deletion.
+Levenshtein distance can be expanded with the method Damerau to allow character transposition.
+
+Elasticsearch uses Damerau-Levenshtein distance to calculate edit distance \footnote{\url{https://www.elastic.co/guide/en/elasticsearch/guide/current/fuzziness.html}}.
+The Damerau-Levenshtein distance corresponds to the number of character edits.
+A distance of 1, means one character has to be changed.
 
 \section{Instant, Personalized Search Recommandation}
 An earlier master thesis on this topic implemented a recommendation engine which was able to give better search recommendations.
@@ -15,4 +27,12 @@ However the implemented solution experienced a latency of up to 600 ms.
 In this thesis we will explore the possibility to reduce the search latency to beneath the 100 ms mark. [Instant, personalized search recommendations]
 
 \section{Pseudo-Relevance Feedback}
-\cite{pseudo-relevance}
+Section \ref{sec:query-expansion} how query expansion work and that data are required to measure relevance.
+Often the top-k documents are often used to find pseudo-relevance for query expansion.
+However, the top-k documents are in many case not relevant to be used for query expansion \textit{Selecting good expansion terms for pseudo-relevance} \cite{pseudo-relevance-invalid}. 
+
+\section{Relevance Feedback}
+
+\subsection{Explicit Feedback}
+
+\subsection{Implicit Feedback}
