@@ -1,8 +1,21 @@
 \chapter{Related Work}
 \label{ch:related-work}
 
-\section{Twitter Query Suggestion Engine}
+\section{Instant, Personalized Search Recommandation}
+This project thesis is based on the work by Rudihagen \cite{master-thesis}.
+His reseach focused on personalizing app recommandations to achieve better recommandations compared to returning the most popular results (popular meaning most downloaded on Google Play).
+The implemented recommandation engine returned promising results, but had a few shortcommings in terms of latency, scalability and test data size.
 
+\begin{itemize}
+  \item The implemented solution experienced a latency of up to 600 ms with some queries.
+  \item Each user had their own index in Elasticsearch, which doesn't scale well.
+  \item The data set contained data from 46 different users.
+\end{itemize}
+
+This project thesis will explore the possibility to reduce the search latency to beneath the 100 ms mark, and how to structure data to scale better.
+
+\section{Twitter Query Suggestion Engine}
+Twitter’s query suggestion engine \cite{twitter-suggestion} suggests query hastags for users.
 Twitter’s query suggestion engine \cite{twitter-suggestion} returns the most trending topics and merge this result with more long term trending topics.
 Twitter have low latency requirements, however the query suggestion is not personalized in the same way as this project thesis tries to achieve.
 
@@ -21,15 +34,10 @@ Elasticsearch uses Damerau-Levenshtein distance to calculate edit distance \foot
 The Damerau-Levenshtein distance corresponds to the number of character edits.
 A distance of 1, means one character has to be changed.
 
-\section{Instant, Personalized Search Recommandation}
-An earlier master thesis on this topic implemented a recommendation engine which was able to give better search recommendations.
-However the implemented solution experienced a latency of up to 600 ms.
-In this thesis we will explore the possibility to reduce the search latency to beneath the 100 ms mark. [Instant, personalized search recommendations]
-
 \section{Pseudo-Relevance Feedback}
-Section \ref{sec:query-expansion} how query expansion work and that data are required to measure relevance.
+[what is pseudo relevance feedback?]
 Often the top-k documents are often used to find pseudo-relevance for query expansion.
-However, the top-k documents are in many case not relevant to be used for query expansion \textit{Selecting good expansion terms for pseudo-relevance} \cite{pseudo-relevance-invalid}. 
+However, the top-k documents are in many case not relevant, and thus not suitable data for query expansion \cite{pseudo-relevance-invalid}.
 
 \section{Relevance Feedback}
 
