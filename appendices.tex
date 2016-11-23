@@ -1,1 +1,32 @@
 \chapter{Appendices}
+
+\section{Elasticsearch Query}
+\begin{lstlisting}[language=python]
+{
+    query : {
+        terms : {tags : []}
+    },
+    size: 50,
+    aggregations : {
+        terms: {
+            terms : {
+                field : "tags.keyword",
+                size: 50
+            }
+        },
+        term_count: {
+            value_count: {
+                field: "tags.keyword"
+            }
+        }
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=python]
+{
+    query : {
+        terms : {tags : []}
+    }
+}
+\end{lstlisting}
