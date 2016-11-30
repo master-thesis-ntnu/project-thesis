@@ -107,10 +107,13 @@ If a user clicks a search result, the result may be regarded as relevant.
 Even though the result may not be relevant, it is a good indication.
 
 \subsection{Implicit Feedback}
-
+The problem with explicit feedback, is that it requires interaction from the user.
+\textit{Implicit feedback} on the other hand, doesn't require any involvement from the user.
+Examples of implicit user data are:
+collect which documents are view or not from a result and measure time spent viewing a document.
 
 \subsection{Pseudo-Relevance Feedback}
-Retrieval of data to use relevance feedback requires interaction from the user.
+Retrieval of data to use relevance feedback requires either explicit or implicit user interaction.
 Manually involving the user in the search is undesireable.
 To avoid this an approach called pseudo-relevance feedback can be used.
 
@@ -130,7 +133,7 @@ There exists different method of query expansion and this thesis describes two t
 Only Kullback-Leibler is implemented in this project thesis, and the implementation is described in chapter \ref{ch:approach}.
 
 \subsection{Kullback-Leibler Divergence}
-Kullback-Leibler divergence measures how well distribution P represents the distrubution Q.
+\textit{Kullback-Leibler divergence} measures how well distribution P represents the distrubution Q.
 
 % Kullback-Leibler Distance Equation
 \begin{cequation}[H]
@@ -141,5 +144,3 @@ Kullback-Leibler divergence measures how well distribution P represents the dist
 	\caption{Kullback-Leibler Distance}
   \label{kl-distance}
 \end{cequation}
-
-\subsection{Rochio Standard Equation}
