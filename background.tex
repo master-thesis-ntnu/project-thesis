@@ -1,5 +1,8 @@
 \chapter{Background}
 \label{ch:background}
+This chapter explains important theory and techniques behind search engines.
+First the technology used is explained, then the search engine and how it calculates search results.
+Lastly, relevance feedback is described and how it may be used with query expansion.
 
 \section{Technology}
 The experiment in this project thesis utilized a webserver and a search engine.
@@ -41,7 +44,6 @@ Inverse document frequency discribes how many times a term is present in all the
 Terms with high frequencies is often less relevant.
 E.g. the terms "a" and "an" often appears in a sentence but should be the documents a high score.
 
-
 \begin{cequation}[H]
 	\begin{equation}
 		\mathbf{idf} = 1 + \log{[\frac{numDocs}{docFrequency + 1}]}
@@ -51,6 +53,10 @@ E.g. the terms "a" and "an" often appears in a sentence but should be the docume
 \end{cequation}
 
 \subsection{Document Normalization}
+A title field is likely to be shorter compared to a description field.
+As a result description is possibly contains more mentions of a given term.
+To account for longer fields document normalization is used.
+Elasticsearch's implementation is illustrated in equation \ref{eq:normalization}.
 
 \begin{cequation}[H]
 	\begin{equation}
@@ -133,14 +139,42 @@ There exists different method of query expansion and this thesis describes two t
 Only Kullback-Leibler is implemented in this project thesis, and the implementation is described in chapter \ref{ch:approach}.
 
 \subsection{Kullback-Leibler Divergence}
-\textit{Kullback-Leibler divergence} measures how well distribution P represents the distrubution Q.
+\textit{Kullback-Leibler divergence} measures how well distribution P(t) represents the distribution Q(t).
+The variables in distribution P(t) and Q(t) is explained in the bullet points bellow. [maybe change to table??]
+
+\begin{itemize}
+	\item \textit{numberOfTimesInTopKDocuments} is the number of times a term is given present in the top k documents
+	\item \textit{numberOfTermsInTopKDocuments} is the number of terms in total in the top k documents
+	\item \textit{totalNumberOfTimesInCollection} is the total number of times a term is present in the data collection
+	\item \textit{totalNumberOfTermsInCollection} is the total number of terms in the data collection
+\end{itemize}
+
+Equation \ref{eq:kl-distribution-p} explains how to calculate the distribution P(t),
+and equation \ref{eq:kl-distribution-q} explains how to calculate distribution Q(t).
+
+% Kullback-Leibler P distribution
+\begin{cequation}[H]
+	\begin{equation}
+		\mathbf{P} = \frac{numberOfTimesInTopKDocuments}{numberOfTermsInTopKDocuments}
+	\end{equation}
+  \label{eq:kl-distribution-p}
+\end{cequation}
+
+% Kullback-Leibler Q distribution
+\begin{cequation}[H]
+	\begin{equation}
+		\mathbf{Q} = \frac{totalNumberOfTimesInCollection}{totalNumberOfTermsInCollection}
+	\end{equation}
+  \label{eq:kl-distribution-q}
+\end{cequation}
+
+Computing the Kullback-Leibler distance for a term is given by equation \ref{eq:kl-distance}.
 
 % Kullback-Leibler Distance Equation
 \begin{cequation}[H]
 	\begin{equation}
-	    \label{equ:line}
 		\mathbf{KL}_D[P(t), Q(t)] = P(t)*\log{[\frac{P(t)}{Q(t)}]}
 	\end{equation}
 	\caption{Kullback-Leibler Distance}
-  \label{kl-distance}
+  \label{eq:kl-distance}
 \end{cequation}
