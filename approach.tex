@@ -3,7 +3,12 @@
 This chapter describes how the search was conducted and all the assumptions which were taken.
 
 \section{Dataset}
-[Flickr API]
+The consists of data from the Flickr API \footnote{\url{https://www.flickr.com/services/api/}}.
+Flicker provides an API enpoint which containts data of the latest images.
+The test data was gathered from this endpoint over a time period of about 4 weeks.
+As the API limits the number of requests per hour, the data had to be collected over an extended period of time.
+
+The internal representation in Elasticsearch of the data from Flickr can be seen in appendix \ref{ap:flickr-data}.
 
 \section{Search Implementation}
 
@@ -13,23 +18,21 @@ The experiment's performance measure was latency.
 Figure \ref{fig:sequence-diagram-search} shows the experiments sequence diagram.
 First the a HTTP request arrives the web server.
 The search terms are extracted and from the users query.
-In this experiment, the extracted terms are searched against photo hastags.
-The query sent to Elasticsearch can be seen in Appendix \ref{es-query-inital-search}.
+In this experiment, the extracted terms are searched against photo tags.
+The query sent to Elasticsearch can be seen in appendix \ref{ap:initial-query}.
 An aggregation is added to the query as the data is needed later to calculate the KL score.
 
-From Elasticsearch all the top k documents are returned together with an hashtag aggregation.
-The aggregation contains each hashtag with its corresponding document count.
-However this count are all the occurences of the hashtag, and not the count of the top k document.
-Hashtag count from the top k documents are calculated from the returned photos.
-Using Equation \ref{kl-distance-sym} all hashtags are scored.
-The top 10 hashtags are used as search terms.
+From Elasticsearch all the top k documents are returned together with an tag aggregation.
+The aggregation contains each tag with its corresponding document count.
+The aggregated count are all the occurences of the tag, and not the count of the top-k document.
+Tag count from the top-k documents are calculated from the returned photos.
+Each tag is given a score by calculating the KL value using equation \ref{eq:kl-distance}.
+All the inital search terms are used, including the terms with highest score.
+However, no more than a total of 10 search terms are used.
 
-After calculating the new search terms, a new query are sent to Elasticsearch.
-The result from the second query are sent directly to back to the user.
-
-[Add Elasticsearch initial result query]
-[Add elasticsearch query]
-[Add photo data structure]
+Lastly, after calculating the new search terms, a new query are sent to Elasticsearch.
+The query used for the final search is available in appendix \ref{ap:final-query}.
+Results from the last query is given directly back to the user without any post-processing.
 
 \begin{figure}[h!]
 \centering \includegraphics[width=0.9\linewidth]{img/sequence-diagram-search.png}
