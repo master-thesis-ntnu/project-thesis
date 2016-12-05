@@ -1,5 +1,8 @@
 \chapter{Related Work}
 \label{ch:related-work}
+Currently there are research about query expansion and pseudo-relevance feedback.
+Most of the research is currently focused towards achieving the best relevance,
+while this project thesis focuses on making query expansion fast en scalable.
 
 \section{Instant, Personalized Search Recommandation}
 This project thesis is based on the work by Rudihagen \cite{master-thesis}.
@@ -14,12 +17,8 @@ The implemented recommandation engine returned promising results, but had a few 
 
 This project thesis will explore the possibility to reduce the search latency to beneath the 100 ms mark, and how to structure data to scale better.
 
-\section{Twitter Query Suggestion Engine}
-Twitter’s query suggestion engine \cite{twitter-suggestion} suggests query hastags for users.
-Twitter’s query suggestion engine \cite{twitter-suggestion} returns the most trending topics and merge this result with more long term trending topics.
-Twitter have low latency requirements, however the query suggestion is not personalized in the same way as this project thesis tries to achieve.
-
 \section{Fuzzy Search}
+[Add reference in this paragraph]
 A studdy found that 50\% of users reformulate their queries, and close to a third of these users reformulated their query three times or more \cite{query-reformulate}[This should be moved to a different section].
 With a standard term search the user has to spell the term correct, a misspelled term will most likely yield no or few results.
 E.g the term "blu" should also retrieve results on the term "blue."
@@ -34,6 +33,14 @@ Elasticsearch uses Damerau-Levenshtein distance to calculate edit distance \foot
 The Damerau-Levenshtein distance corresponds to the number of character edits.
 A distance of 1, means one character has to be changed.
 
+\section{Twitter Query Suggestion Engine}
+Twitter’s query suggestion engine \cite{twitter-suggestion} tries to deliver the most relevante query suggestions.
+While Twitter also focuses on speed, they try to find the most popular and trending tags.
+
 \section{Pseudo-Relevance Feedback}
+Pseudo-relevance feedback uses information from the top k documents to compute query expansion terms.
+However, the top k documents is not always relevant and may introduce noise to the data set.
+\textit{Query Dependent Pseudo-Relevance Feedback based on Wikipedia} research query dependent expansion on data from Wikipedia by using three different methods:
+relevance model, strategy for entity/ambiguous queries and field evidence for query expansion \cite{pseudo-relevance-wikipedia}.
+
 [write about pseudo-relevance feedback research which are relevant]
-\cite{pseudo-relevance-wikipedia}

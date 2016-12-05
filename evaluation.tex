@@ -1,12 +1,50 @@
 \chapter{Evaluation}
 \label{ch:evaluation}
-The following chapter describes how the experiment setup and the results.
+The evaluation chapter describes the experiment setup and the results.
 
 \section{Experiment Setup}
 
+The experiment setup consists of a client, a web server and a search engine.
+Figure \ref{fig:experiment-setup} illustrates the experiment setup.
+The client was a NodeJS script sending requests to the web server.
+
+\begin{figure}[h!]
+  \centering \includegraphics[width=0.9\linewidth]{img/experiment_setup.png}
+  \caption{Experiment setup}
+  \label{fig:experiment-setup}
+\end{figure}
+
+Elasticsearch's configuration was set to default settings,
+except the memory heap size was changed to 4GB to make sure the search engine had sufficient memory.
+
+\subsection{Hardware}
+The experiment were conducted on a desktop computer with the specification described in table \ref{tbl:hardware}.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{c|c}
+      \textbf{Component} & \textbf{Model} \\ \hline
+      CPU       & Intel Core i5           \\ \hline
+      RAM       & 16 GB                   \\ \hline
+      SSD       & 256 GB                  \\ \hline
+    \end{tabular}
+    \caption{Hardware components of the computer running the experiments}
+    \label{tbl:hardware}
+\end{table}
 
 \section{Result}
 Measuring document relevance from users were never done as the main focus was latency and scaleability.
 
 Latency was measure from the webserver recieved the request, to the server responded the user's request.
 The round trip time from the webserver to the user is not taken into account.
+
+As the web server and the search engine is on the same physical machine the round trip times are minimal.
+However, in practice round trip times is often an important factor.
+
+Figure \ref{fig:baseline} displays results from queries without query expansion.
+The results without query expansion is used as a baseline,
+to establish how much impact query expansion has on the respons times.
+
+\input{results-baseline}
+\input{results-query-expansion}
+\input{results-query-expansion-topk}
