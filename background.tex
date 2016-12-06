@@ -1,12 +1,12 @@
 \chapter{Background}
 \label{ch:background}
 This chapter explains important theory and techniques behind search engines.
-First the technology used is explained, then the search engine and how it calculates search results.
+First the technologies used in the implementation are explained.
+Next the search engine is described and how it scores documents when searching.
 Lastly, relevance feedback is described and how it may be used with query expansion.
 
 \section{Technology}
-The experiment in this project thesis utilized a webserver and a search engine.
-This section gives a brief summary of the technologies used.
+The experiment in this project thesis utilized a web server and a search engine as the backend.
 
 NodeJS \footnote{\url{https://nodejs.org}} v7 were chosen as the webserver.
 NodeJS were primarly chosen because the author of this project thesis had used it in multiple projects before.
@@ -14,7 +14,7 @@ Inside NodeJS lies the V8 \footnote{\url{https://developers.google.com/v8/}} Jav
 With NodeJS comes a rich package system delivered through NPM.
 
 Elasticsearch \footnote{\url{https://www.elastic.co/products/elasticsearch}} v5 were utilized as the search engine.
-At the time of writing Elasticsearch is one of the most popular search engine.
+At the time of writing Elasticsearch is one of the most popular open source search engines.
 Elasticsearch is open source and built on top of Lucene \footnote{\url{https://lucene.apache.org/}}.
 Lucene is the search engine itself,
 and Elasticsearch provides functionality for distribution and a REST API interface.
@@ -22,8 +22,6 @@ and Elasticsearch provides functionality for distribution and a REST API interfa
 \section{Search Engine}
 This section describes how Elasticsearch scores its documents and is based on the documentation found on the website \cite{elasticsearch-scoring}.
 The following subsections are needed to understand how the end result is determined, when using a term search in Elasticsearch.
-
-[talk about IR book] \cite{ir-book}
 
 \subsection{Term Frequency}
 Term frequency is the number of times a term is mentioned in a document.
@@ -42,7 +40,7 @@ Term frequency calculation is given by Equation \ref{eq:term-frequency}.
 \subsection{Inverse Document Frequency}
 Inverse document frequency discribes how many times a term is present in all the documents.
 Terms with high frequencies is often less relevant.
-E.g. the terms "a" and "an" often appears in a sentence but should be the documents a high score.
+E.g. the terms "a" and "an" often appears in a sentence but should not be given a high score even though they appear many times.
 
 \begin{cequation}[H]
 	\begin{equation}
@@ -81,16 +79,42 @@ A documents score in Elasticsearch is given by the Equation \ref{eq:document-sco
 
 \subsection{Multiple term query}
 The document score function described in Section \ref{sec:doc-score} is only used when searching for a single term.
-When searching multiple terms the search Lucene are using multiple techniques: boolean model, TF/IDF and vector space model.
+When searching multiple terms the search Lucene \footnote{\url{http://lucene.apache.org/core/3_0_3/api/core/org/apache/lucene/search/Similarity.html}}
+are using multiple techniques: boolean model, TF/IDF and vector space model.
+Equation \ref{eq:scoring-function} shows how each document are scored against a multiterm query.
+Table \ref{tbl:scoring-function} explaines each variable in equation \ref{eq:scoring-function}.
+A more in depth explenation is available at Elasticsearch's documentation \footnote{\url{https://www.elastic.co/guide/en/elasticsearch/guide/current/practical-scoring-function.html}}.
 
-\url{http://lucene.apache.org/core/3_0_3/api/core/org/apache/lucene/search/Similarity.html}
-\begin{cequation}[H]
+\begin{cequation}
 	\begin{equation}
-		\mathbf{score(q,d)} = coord(q,d) * queryNorm(q) * sum [tf(t in d) * idf(t)^2 * t.getBoost() * norm(t,d)]
+		\begin{aligned}
+			\mathbf{score(q,d)} = & coord(q,d) \times queryNorm(q) \\
+														& \times \sum tf(t in d) \times idf(t)^2 \times t.getBoost() \times norm(t,d)
+		\end{aligned}
 	\end{equation}
-	\caption{Lucene Scoring Function}
+	\caption{Equaction for scoring documents when searching with multiple terms. Each variable are described in table \ref{tbl:scoring-function}}
   \label{eq:scoring-function}
 \end{cequation}
+
+\begin{table}
+		\centering
+    \begin{tabular}{|l|l|}
+    \hline
+		\multicolumn{1}{|c|}{\bfseries Variable} & \multicolumn{1}{|c|}{\bfseries Description} \\ \hline
+    \textit{t}         & term                           		\\ \hline
+    \textit{d}         & document                       		\\ \hline
+    \textit{q}         & query                          		\\ \hline
+		\textit{score}     & document score from a given query	\\ \hline
+    \textit{coord}     & coordination factor            		\\ \hline
+    \textit{queryNorm} & query normalization factor     		\\ \hline
+    \textit{tf}        & term frequency                 		\\ \hline
+    \textit{idf}       & inverse document frequency     		\\ \hline
+    \textit{getBoost}  & boost factor used on the query 		\\ \hline
+    \textit{norm}      & document normalization factor  		\\ \hline
+    \end{tabular}
+		\caption{Variable descriptions for equation \ref{eq:scoring-function}}
+		\label{tbl:scoring-function}
+\end{table}
 
 \section{Relevance Feedback}
 The idea behind \textit{relevance feedback} is to use the result from the initial query to extract relevant information about the top-k documents.
@@ -140,7 +164,7 @@ Only Kullback-Leibler is implemented in this project thesis, and the implementat
 
 \subsection{Kullback-Leibler Divergence}
 \textit{Kullback-Leibler divergence} measures how well distribution P(t) represents the distribution Q(t).
-The variables in distribution P(t) and Q(t) is explained in the bullet points bellow. [maybe change to table??]
+The variables in distribution P(t) and Q(t) is explained in the bullet points bellow.
 
 \begin{itemize}
 	\item \textit{numberOfTimesInTopKDocuments} is the number of times a term is given present in the top k documents
@@ -157,6 +181,7 @@ and equation \ref{eq:kl-distribution-q} explains how to calculate distribution Q
 	\begin{equation}
 		\mathbf{P} = \frac{numberOfTimesInTopKDocuments}{numberOfTermsInTopKDocuments}
 	\end{equation}
+	\caption{}
   \label{eq:kl-distribution-p}
 \end{cequation}
 
@@ -165,6 +190,7 @@ and equation \ref{eq:kl-distribution-q} explains how to calculate distribution Q
 	\begin{equation}
 		\mathbf{Q} = \frac{totalNumberOfTimesInCollection}{totalNumberOfTermsInCollection}
 	\end{equation}
+	\caption{}
   \label{eq:kl-distribution-q}
 \end{cequation}
 
