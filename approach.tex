@@ -1,36 +1,46 @@
 \chapter{Approach}
 \label{ch:approach}
-This chapter describes how the search was conducted and all the assumptions which were taken.
+The approach chapter describes the dataset used and how the search is implemented on the backend.
 
 \section{Dataset}
-The consists of data from the Flickr API \footnote{\url{https://www.flickr.com/services/api/}}.
+The dataset consists of data from the Flickr API \footnote{\url{https://www.flickr.com/services/api/}}.
 Flicker provides an API enpoint which containts data of the latest images.
-The test data was gathered from this endpoint over a time period of about 4 weeks.
 As the API limits the number of requests per hour, the data had to be collected over an extended period of time.
+The test data was gathered from this endpoint over a time period of about 4 weeks.
 
 The internal representation in Elasticsearch of the data from Flickr can be seen in appendix \ref{ap:flickr-data}.
+This data contains [??] photos and [??] tags, and takes up [??] MB in Elasticsearch.
+Dynamic mapping was used for defining the fields for the internal representation in Elasticsearch.
+A single index called \textit{photos} was used to hold the photo data.
 
 \section{Search Implementation}
-
 One of the main goal in this project thesis was to achieve lower latency and better scaleability compared to the KL search implemented in the master thesis done by Rudihagen \cite{master-thesis}.
 The experiment's performance measure was latency.
 
 Figure \ref{fig:sequence-diagram-search} shows the experiments sequence diagram.
 First the a HTTP request arrives the web server.
-The search terms are extracted and from the users query.
+The search terms are extracted from the user\'s query.
 In this experiment, the extracted terms are searched against photo tags.
-The query sent to Elasticsearch can be seen in appendix \ref{ap:initial-query}.
-An aggregation is added to the query as the data is needed later to calculate the KL score.
+The initial query sent to Elasticsearch can be seen in appendix \ref{ap:initial-query},
+and consists of a term query and an aggregation query.
+From the term query the top 10 documents are returned.
+Each photo document contains an array of all the tags attached to the photo.
+The aggregation calculates the number of occurences for each tag and returns the top 50 tags.
+The number of occurences is the total number of documents a given tag is present in, from the complete collection.
+As a result, a highly important tag may be in the top 10 documents and not in the tag aggregation.
+A better solution would be to only aggregate on the tags from the term query result.
 
-From Elasticsearch all the top k documents are returned together with an tag aggregation.
+From Elasticsearch all the top-k documents are returned together with an tag aggregation.
 The aggregation contains each tag with its corresponding document count.
 The aggregated count are all the occurences of the tag, and not the count of the top-k document.
 Tag count from the top-k documents are calculated from the returned photos.
 Each tag is given a score by calculating the KL value using equation \ref{eq:kl-distance}.
-All the inital search terms are used, including the terms with highest score.
+
+After calculating the KL score for each term the query is expanded.
+The initial search terms are kept, and the highest scored tags are then added to the expanded query.
 However, no more than a total of 10 search terms are used.
 
-Lastly, after calculating the new search terms, a new query are sent to Elasticsearch.
+Lastly, after calculating the new search terms, the new query is sent to Elasticsearch.
 The query used for the final search is available in appendix \ref{ap:final-query}.
 Results from the last query is given directly back to the user without any post-processing.
 
