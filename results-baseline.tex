@@ -1,28 +1,61 @@
-
-\centering
-\begin{tikzpicture}[]
-  \begin{axis}[
-      title={Response time without query expansion},
-      xlabel={Number of parallel requests},
-      ylabel={Response time [in milliseconds]},
-      xmin=0, xmax=20,
-      ymin=0, ymax=100,
-      %legend pos=north west,
-      grid=major,
-      grid style=thin,
-    ]
-      \addplot[
-        color=blue,
-        mark=square,
+\begin{figure}
+  \centering
+  \begin{tikzpicture}[]
+    \begin{axis}[
+        xlabel={Number of parallel requests},
+        ylabel={Response time [in milliseconds]},
+        xmin=0, xmax=10,
+        ymin=0, ymax=15,
+        %legend pos=north west,
+        grid=major,
+        grid style=thin,
+        legend pos=outer north east
       ]
-      coordinates {
-        (1,   4.7)
-        (2,   9.2)
-        (5,   13.7)
-        (10,  18.3)
-        (15,  23.2)
-        (20,  28.0)
-      };
-  \end{axis}
+        \addplot[
+          color=blue,
+          mark=square,
+        ]
+        coordinates {
+          (1,   1.75)
+          (5,   2.92)
+          (10,  4.22)
+        };
+        \addlegendentry{average}
+
+        \addplot[
+          color=red,
+          mark=square,
+        ]
+        coordinates {
+          (1,   1.52)
+          (5,   2.46)
+          (10,  3.62)
+        };
+        \addlegendentry{median}
+
+        \addplot[
+          color=yellow,
+          mark=square,
+        ]
+        coordinates {
+          (1,   2.77)
+          (5,   5.75)
+          (10,  8.85)
+        };
+        \addlegendentry{95th percentile}
+
+        \addplot[
+          color=green,
+          mark=square,
+        ]
+        coordinates {
+          (1,   8.20)
+          (5,   11.58)
+          (10,  14.79)
+        };
+        \addlegendentry{99th percentile}
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Response time without query expansion}
   \label{fig:baseline}
-\end{tikzpicture}
+\end{figure}
