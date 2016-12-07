@@ -1,17 +1,6 @@
 \chapter{Approach}
 \label{ch:approach}
-The approach chapter describes the dataset used and how the search is implemented on the backend.
-
-\section{Dataset}
-The dataset consists of data from the Flickr API \footnote{\url{https://www.flickr.com/services/api/}}.
-Flicker provides an API enpoint which containts data of the latest images.
-As the API limits the number of requests per hour, the data had to be collected over an extended period of time.
-The test data was gathered from this endpoint over a time period of about 4 weeks.
-
-The internal representation in Elasticsearch of the data from Flickr can be seen in appendix \ref{ap:flickr-data}.
-This data contains [??] photos and [??] tags, and takes up [??] MB in Elasticsearch.
-Dynamic mapping was used for defining the fields for the internal representation in Elasticsearch.
-A single index called \textit{photos} was used to hold the photo data.
+The approach chapter describes how the search is implemented on the backend and how the NodeJS was configured.
 
 \section{Search Implementation}
 One of the main goal in this project thesis was to achieve lower latency and better scaleability compared to the KL search implemented in the master thesis done by Rudihagen \cite{master-thesis}.
@@ -49,3 +38,10 @@ Results from the last query is given directly back to the user without any post-
 \caption{Sequence diagram for the search experiment}
 \label{fig:sequence-diagram-search}
 \end{figure}
+
+\section{NodeJS Configuration}
+A NodeJS instance only runs on a single thread.
+Todays servers tend to have multiple cores, and one each NodeJS instance is require for full system utilization.
+To handle multi-core servers, NodeJS contains a feature called clustering.
+The cluster library  inside NodeJS can create multiple instances which servers the same port.
+As a result the traffic is distributed evenly between all the CPU cores.
