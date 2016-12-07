@@ -1,38 +1,51 @@
 \chapter{Introduction}
 \section{Motivation}
-[Maby mention something about todays search engines?]
+Search engines today strives to deliver fast and relevant search results.
+Most user may quickly notice whether the search results are relevant or not.
+Nonetheless, a second important factor is speed and users require the service to be interactive.
+Interactive services have a requirement to deliver results within 100ms \cite{google-latency}.
 
 Today an increasing number of software companies try to personalize their services.
 A few examples of personalized services are Facebook's news feed, Netfix's movie suggestion and Spotifi's Discover Weekly.
 
-In research done by Google \cite{google-latency} they found that a latency of 100ms or less is required for interactive tasks.
-As a result search engines most deliver results back to the user within 100ms, or else the user is most likely to abondon the website.
+High latency may lead to users abondoning your site and lost revenue.
+Returning results fast, is more important compared to the number of results returned.
+While conducting latency experiments Google found that an increased latency of 0.5 seconds, lead to 20\% less traffic [Marissa Mayer at Web 2.0][??].
 
-This project thesis is based on the work done in the master thesis \textit{Instant, Personalized Search Recommandation} by Juul Arthur R Rudihagen \cite{master-thesis}.
-In the master thesis Rudihagen researched how an instant personalized search could be achieved.
-The research achieved a personalized search.
-However, several of the search implemantations exceeded the limit of 100ms, as stated in the master thesis by Rudihagen \cite[sec 6.6]{master-thesis}.
+This project report builds on and extends the work done by Juul Arthur R Rudihagen \cite{master-thesis}.
+In this work Rudihagen researched how an instant personalized search could be achieved.
+The research achieved a personalized search which returned results of higher relevance to the user.
+However, the results from the work showed that the implemented method did not meet the requirement of interactivity \cite[master-thesis].
 
-This project thesis examines how a fast and scaleable search may be achieved, with the research done by Rudihagen as a baseline.
+This project report examines how a fast and scaleable search may be achieved, with the research done by Rudihagen as a baseline.
 His search implementations had limits towards latency and scalability.
 A major part of the latency came from multiple round trips from the webserver to the database and the search engine.
 
 \section{Problem specification}
-This project thesis tries to answer the research questions below, with the main focus being research question \ref{rq:scaling} and \ref{rq:latency}.
+This project report tries to answer the following research questions, with the main focus being research question \ref{rq:scaling} and \ref{rq:latency}.
 
 \begin{enumerate}
-  \item How to provide instant personalized recommendations on a cold start based on the query typed?
-  \item Does the personalized recommendations give better results for the user?
+  %\item How to provide instant personalized recommendations on a cold start based on the query typed?
+  \item How does the personalized recommendations give better results for the user?
   \item\label{rq:scaling} How to make the search recommandation scale with an increasing amount of data?
-  \item\label{rq:latency} How to provide search recommendations within 100ms?
+  \item\label{rq:latency} How to develop search recommendation method that fulfill the interactive requirements?
 \end{enumerate}
 
 \section{Structure}
-This project thesis consists of 6 chapters: Background, Related Work, Approach, Evaluation and a Conclusion. \\
+This project thesis consists of 5 chapters: Background, Related Work, Approach, Evaluation and a Conclusion.
+First the \hyperref[ch:background]{Background} chapter introduces theory about search engines,
+query expansion and the technology and method used for testing the implementation.
+Chapter \hyperref[ch:related-work]{Related Work} describes related reasearch on personalized search.
+The master thesis this project thesis is based on is also introduced.
+The chapter \hyperref[ch:approach]{Approach} describes the implemented query expansion and how the web server were configured.
+Next, the chapter \hyperref[ch:evaluation]{Evaluation} outlines how the experiments were conducted and the results from the experiments.
+The last section discusses the results and makes a comparison with the work by Rudihagen \cite{master-thesis}.
+Lastly, the \hyperref[ch:conclusion]{Conclusion} chapter gives a brief summary of the results and the implementation.
+And ends with a section about futher work which can be done to improve the current implementation.
 
-\textbf{ \ref{ch:background}. Background: } Introduces theory about search engines, query expansion and the technology used for testing. \\
-\textbf{ \ref{ch:related-work}. Related Work:} Describes related research on personalized search. \\
-\textbf{ \ref{ch:approach}. Approach: } Contains information about the implementation used in this thesis \\
-\textbf{ \ref{ch:evaluation}. Evaluation: } Evaluates the implementation and compares it to the master thesis by Rudihagen \cite{master-thesis} \\
-\textbf{ \ref{ch:conclusion}. Conclusion: } Brief summary of the results and the implementation. Chapter
-\ref{ch:conclusion} also discuss futher work which can be done improve the current implementation.
+%\textbf{ \ref{ch:background}. Background: } Introduces theory about search engines, query expansion and the technology used for testing. \\
+%\textbf{ \ref{ch:related-work}. Related Work:} Describes related research on personalized search. \\
+%\textbf{ \ref{ch:approach}. Approach: } Contains information about the implementation used in this thesis \\
+%\textbf{ \ref{ch:evaluation}. Evaluation: } Evaluates the implementation and compares it to the master thesis by Rudihagen \cite{master-thesis} \\
+%\textbf{ \ref{ch:conclusion}. Conclusion: } Brief summary of the results and the implementation. Chapter
+%\ref{ch:conclusion} also discuss futher work which can be done improve the current implementation.
