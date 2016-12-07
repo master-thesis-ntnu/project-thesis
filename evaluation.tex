@@ -2,7 +2,18 @@
 \label{ch:evaluation}
 The evaluation chapter describes the experiment setup and the results.
 
-\section{Experiment Setup}
+\section{Dataset}
+The dataset consists of data from the Flickr API \footnote{\url{https://www.flickr.com/services/api/}}.
+Flicker provides an API enpoint which containts data of the latest images.
+As the API limits the number of requests per hour, the data had to be collected over an extended period of time.
+The test data was gathered from this endpoint over a time period of about 4 weeks.
+
+The internal representation in Elasticsearch of the data from Flickr can be seen in appendix \ref{ap:flickr-data}.
+This data contains [??] photos and [??] tags, and takes up [??] MB in Elasticsearch.
+Dynamic mapping was used for defining the fields for the internal representation in Elasticsearch.
+A single index called \textit{photos} was used to hold the photo data.
+
+\section{Experimental Setup}
 
 The experiment setup consists of a client, a web server and a search engine.
 Figure \ref{fig:experiment-setup} illustrates the experiment setup.
@@ -32,7 +43,7 @@ The experiment were conducted on a desktop computer with the specification descr
     \label{tbl:hardware}
 \end{table}
 
-\section{Result}
+\section{Results}
 Measuring document relevance from users were never done as the main focus was latency and scaleability.
 
 Latency was measure from the webserver recieved the request, to the server responded the user's request.
@@ -48,3 +59,20 @@ to establish how much impact query expansion has on the respons times.
 \input{results-baseline}
 \input{results-query-expansion}
 \input{results-query-expansion-topk}
+
+\section{Discussion}
+Figure \ref{fig:sequence-diagram-search-master} shows the sequence diagram for Rudihagen's query expansion solution using KL.
+On the figure 4 round trips are required from the webserver to the database and the search engine.
+The implementation discussed in Chapter \ref{ch:approach} describes a solution to decrease the number of round trips from 4 to 2.
+In Chapter \ref{ch:evaluation} the performance is greatly increased.
+
+\begin{figure}[h!]
+\centering \includegraphics[width=0.9\linewidth]{img/sequence-diagram-search-master-thesis.png}
+\caption{Sequence diagram from Rudihagen's master thesis implementation of query expansion using KL \cite[p. 37]{master-thesis}.}
+\label{fig:sequence-diagram-search-master}
+\end{figure}
+
+Even though the latency was greatly reduced there are a few disclamers.
+Firstly both the webserver and the search engine ran on the same computer.
+As a result the round trip time was almost negligible, which is often not the case in a real world environment.
+To give more realistic measurements, the solution should be tested on a cloud solution where the webserver and the search engine doesn't run on the same physical server.
