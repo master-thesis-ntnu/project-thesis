@@ -5,7 +5,7 @@ Most of the research are focused towards achieving the best relevance,
 while this project thesis focuses on making query expansion fast en scalable.
 
 \section{Instant, Personalized Search Recommandation}
-This project thesis is based on the work by Rudihagen \cite{master-thesis}.
+As mentioned, this project report builds on and extends the work by Rudihagen \cite{master-thesis}.
 His reseach focused on personalizing app recommandations to achieve better recommandations compared to returning the most popular results (popular meaning most downloaded).
 The implemented recommandation engine returned promising results, but had a few shortcommings in terms of latency, scalability and test data size.
 
@@ -15,15 +15,19 @@ The implemented recommandation engine returned promising results, but had a few 
   \item The dataset contained data from 46 different users.
 \end{itemize}
 
-This project thesis will explore the possibility to reduce the search latency to beneath the 100 ms mark, and how to structure data to scale better.
+This project report aims at exploring the possibility to reduce the search latency to below the 100 ms mark, and how to structure data to scale better.
 Based on the work by Rudihagen,
 the implementation explaned in chapter \cite{ch:approach} assumes that pseudo-relevance feedback returns relevant results.
 
 \section{Fuzzy Search}
-With a standard term search the user has to spell the term correct, a misspelled term will most likely yield no or few results.
-E.g the term "blu" should also retrieve results on the term "blue."
+With a standard term search the user has to spell the term correctly, a misspelled term will most likely yield no or few results.
+E.g the term "sceinci" should also retrieve results on the term "science."
+There are two character edits required to retrieve the correct term "science."
+First switch the two characters "c" and "e" to achieve "scienci."
+Secondly change the character "i" to "e" to accuire the term "science."
+
 A studdy found that 50\% of users reformulate their queries, and close to a third of these users reformulated their query three times or more \cite{query-reformulate}.
-To handle this problem a technique called fuzzy search may be used [Efficient Interactive Fuzzy Keyword Search].
+To handle this problem a technique called fuzzy search may be used [Efficient Interactive Fuzzy Keyword Search][??].
 
 A commonly used method with fuzzy search is Levenshtein distance.
 Levenshtein distance calculates the number of characters edits which are required to transform one string into another.
@@ -39,6 +43,7 @@ A distance of 1, means one character has to be changed.
 One of the most important requirement for Twitter was to provide relevant search results within minutes of a event taking place.
 More precicly they wanted to register trending hashtag within 10 minutes of a event happening.
 Compared to this project thesis Twitter sees most popular within a given timeframe as relevant search results for the user.
+[write more][??]
 
 \section{Pseudo-Relevance Feedback}
 Pseudo-relevance feedback uses information from the top-k documents to compute query expansion terms.
@@ -46,3 +51,4 @@ However, the top-k documents is not always relevant and may introduce noise to t
 \textit{Query Dependent Pseudo-Relevance Feedback based on Wikipedia} research query dependent expansion on data from Wikipedia by using three different methods:
 relevance model, strategy for entity/ambiguous queries and field evidence for query expansion \cite{pseudo-relevance-wikipedia}.
 Their conclusion were that query dependent pseudo-relevance feedback can achieve better relevance compared to the baseline relevance model.
+[write more][??]
