@@ -2,19 +2,21 @@
 \label{ch:background}
 This chapter explains important theory and techniques behind search engines.
 First the technologies used in the implementation are explained.
-Next the search engine is described and how it scores documents when searching.
+Next the search engine is described and how it scores documents when quries are retrieved.
 Lastly, relevance feedback is described and how it may be used with query expansion.
 
 \section{Technology}
-The experiment in this project thesis utilized a web server and a search engine as the backend.
+The experiment in this project report utilized a web server and a search engine as the backend.
+This section gives a brief overview of the technologies used.
 
 NodeJS \footnote{\url{https://nodejs.org}} v7 were chosen as the webserver.
-NodeJS were primarly chosen because the author of this project thesis had used it in multiple projects before.
+NodeJS were chosen because the author of this project report had used it in multiple projects before,
+and it consists of a rich package system called NPM.
+By utilizing open source libraries through NPM, more time could be spent implementing the algoritms for query expansion.
 Inside NodeJS lies the V8 \footnote{\url{https://developers.google.com/v8/}} JavaScript engine.
-With NodeJS comes a rich package system delivered through NPM.
 
 Elasticsearch \footnote{\url{https://www.elastic.co/products/elasticsearch}} v5 were utilized as the search engine.
-At the time of writing Elasticsearch is one of the most popular open source search engines.
+At the time of writing Elasticsearch is a popular open source search engines, which has proven the ability to scale up to petabytes of data [Field notes - ElasticSearch at petabyte scale on AWS][??].
 Elasticsearch is open source and built on top of Lucene \footnote{\url{https://lucene.apache.org/}}.
 Lucene is the search engine itself,
 and Elasticsearch provides functionality for distribution and a REST API interface.
@@ -23,10 +25,12 @@ and Elasticsearch provides functionality for distribution and a REST API interfa
 This section describes how Elasticsearch scores its documents and is based on the documentation found on the website \cite{elasticsearch-scoring}.
 The following subsections are needed to understand how the end result is determined, when using a term search in Elasticsearch.
 
+[si noe om hvordan søk rangeres ved  bruke tf idf, etc][??]
+
 \subsection{Term Frequency}
 Term frequency is the number of times a term is mentioned in a document.
 A document containing a term multiple times is probably more relevant than a document containing fewer occurences.
-However, in this thesis a term is only present one time in each document, and the reason is described in greater detail in Chapter \ref{ch:approach}.
+However, in this work a term is only present one time in each document, and the reason is described in greater detail in Chapter \ref{ch:approach}.
 Term frequency calculation is given by Equation \ref{eq:term-frequency}.
 
 \begin{cequation}[H]
@@ -122,25 +126,25 @@ Once the information is extracted, a new query is executed with extracted inform
 Results from the second query is sent back to the user.
 The assumption is that the second query returns documents which are more relevant to the user.
 
-In \textit{Modern Information Retrieval} they define \textit{relevance feedback} as: "when the user explicitly provides information on relevant documents to a query,"
+In \cite{ir-book} the authors define \textit{relevance feedback} as: "when the user explicitly provides information on relevant documents to a query,"
 and \textit{query expansion} as: "when information related to the query is used to expand it" \cite[p. 177]{ir-book}.
-In other words to use \textit{relevance feedback} interaction from the user is needed, for example the user has to answer whether the result was relevant or not.
-And for \textit{query expansion} information like position and hashtags may be used to expand the query.
+In other words to use \textit{relevance feedback} input from the user is needed.
+For example the user could be given the task to mark each whether each document in the result were relevant or not.
+For \textit{query expansion} information like position and hashtags may be used to expand the query.
 
 \textit{Relevance feedback} is divided into three main categories \textit{explicit feedback}, \textit{implicit feedback} and \textit{pseude-relevance feedback}.
 
-\subsection{Explicit Feedback}
+\subsection{Explicit vs Implicit Feedback}
 \textit{Explicit feedback} data are retrieved directly from user interaction.
 An example would let the user mark whether the results were relevant or not.
 Another approach is to use data from a user search.
 If a user clicks a search result, the result may be regarded as relevant.
 Even though the result may not be relevant, it is a good indication.
 
-\subsection{Implicit Feedback}
 The problem with explicit feedback, is that it requires interaction from the user.
 \textit{Implicit feedback} on the other hand, doesn't require any involvement from the user.
 Examples of implicit user data are:
-collect which documents are view or not from a result and measure time spent viewing a document.
+collect which documents are view or not from a result, and measure time spent viewing a document.
 
 \subsection{Pseudo-Relevance Feedback}
 Retrieval of data to use relevance feedback requires either explicit or implicit user interaction.
@@ -150,17 +154,18 @@ To avoid this an approach called pseudo-relevance feedback can be used.
 Often the top-k documents are often used to find pseudo-relevance for query expansion.
 However, the top-k documents are in many case not relevant, and thus not suitable data for query expansion \cite{pseudo-relevance-invalid}.
 Section \ref{sec:query-expansion} describes a method to extract information from the top-k documents which is regarded as relevant information.
+[too short][??]
 
 \section{Query Expansion}
 \label{sec:query-expansion}
-[Write about Query expansion]
+[Write about Query expansion][??]
 The idea behind query expansion is to add more terms to the users query, and then use the extended query on the search engine.
 According to literature a query expanded search does improve the results \cite[ch. 5]{ir-book}.
 Even though research shows promissing results, query expansions require explicit information which in practice often is difficult to acquire.
 On the other hand, according to Efron \cite{ir-hashtag} hashtags provides an excellent way to acquire the explicit information needed for query expansion.
 
-There exists different method of query expansion and this thesis describes two techniques called Kullback-Leibler divergence and Rochio standard equation.
-Only Kullback-Leibler is implemented in this project thesis, and the implementation is described in chapter \ref{ch:approach}.
+There exists different method of query expansion and this report describes two techniques called Kullback-Leibler divergence and Rochio standard equation.
+Only Kullback-Leibler is implemented in this project report, and the implementation is described in chapter \ref{ch:approach}.
 
 \subsection{Kullback-Leibler Divergence}
 \textit{Kullback-Leibler divergence} measures how well distribution P(t) represents the distribution Q(t).
@@ -204,3 +209,5 @@ Computing the Kullback-Leibler distance for a term is given by equation \ref{eq:
 	\caption{Kullback-Leibler Distance}
   \label{eq:kl-distance}
 \end{cequation}
+
+[add example][??]
