@@ -4,8 +4,8 @@
     \begin{axis}[
         xlabel={Number of parallel requests},
         ylabel={Response time [in milliseconds]},
-        xmin=0, xmax=10,
-        ymin=0, ymax=15,
+        xmin=0, xmax=150,
+        ymin=0, ymax=300,
         %legend pos=north west,
         grid=major,
         grid style=thin,
@@ -27,9 +27,16 @@
           mark=square,
         ]
         coordinates {
-          (1,   1.52)
-          (5,   2.46)
-          (10,  3.62)
+          (1,   8)
+          (5,   13)
+          (10,  20)
+          (15,  28)
+          (20,  34)
+          (30,  49)
+          (40,  63)
+          (50,  73)
+          (100,  123)
+          (150,  260)
         };
         \addlegendentry{median}
 
