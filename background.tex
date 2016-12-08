@@ -22,10 +22,12 @@ Lucene is the search engine itself,
 and Elasticsearch provides functionality for distribution and a REST API interface.
 
 \section{Search Engine}
+A common approach for search engines is to use \textit{term frequency} (TF) and \textit{inverse document frequency} (IDF) to calculate a documents relevance based on a query.
+Documents with the highest TF from a query are believed to be the most relevant.
+On the other hand, the most common words are removed as they do not contain information about the topic.
+TF and IDF alone is a simple model, and Elasticsearch uses a more sofisticated model.
+Elasticsearch's document scoring model are described in the following subsections.
 This section describes how Elasticsearch scores its documents and is based on the documentation found on the website \cite{elasticsearch-scoring}.
-The following subsections are needed to understand how the end result is determined, when using a term search in Elasticsearch.
-
-[si noe om hvordan søk rangeres ved  bruke tf idf, etc][??]
 
 \subsection{Term Frequency}
 Term frequency is the number of times a term is mentioned in a document.
@@ -42,7 +44,7 @@ Term frequency calculation is given by Equation \ref{eq:term-frequency}.
 \end{cequation}
 
 \subsection{Inverse Document Frequency}
-Inverse document frequency discribes how many times a term is present in all the documents.
+Inverse document frequency describes how many times a term is present in all the documents.
 Terms with high frequencies is often less relevant.
 E.g. the terms "a" and "an" often appears in a sentence but should not be given a high score even though they appear many times.
 
@@ -104,7 +106,7 @@ A more in depth explenation is available at Elasticsearch's documentation \footn
 		\centering
     \begin{tabular}{|l|l|}
     \hline
-		\multicolumn{1}{|c|}{\bfseries Variable} & \multicolumn{1}{|c|}{\bfseries Description} \\ \hline
+		\multicolumn{1}{|c|}{\bfseries Variable} & \multicolumn{1}{c|}{\bfseries Description} \\ \hline
     \textit{t}         & term                           		\\ \hline
     \textit{d}         & document                       		\\ \hline
     \textit{q}         & query                          		\\ \hline
@@ -165,10 +167,10 @@ Even though research shows promissing results, query expansions require explicit
 On the other hand, according to Efron \cite{ir-hashtag} hashtags provides an excellent way to acquire the explicit information needed for query expansion.
 
 There exists different method of query expansion and this report describes two techniques called Kullback-Leibler divergence and Rochio standard equation.
-Only Kullback-Leibler is implemented in this project report, and the implementation is described in chapter \ref{ch:approach}.
+Kullback-Leibler is implemented in this project report, and the implementation is described in chapter \ref{ch:approach}.
 
 \subsection{Kullback-Leibler Divergence}
-\textit{Kullback-Leibler divergence} measures how well distribution P(t) represents the distribution Q(t).
+\textit{Kullback-Leibler divergence} (KL) measures how well distribution P(t) represents the distribution Q(t).
 The variables in distribution P(t) and Q(t) is explained in the bullet points bellow.
 
 \begin{itemize}
@@ -209,5 +211,9 @@ Computing the Kullback-Leibler distance for a term is given by equation \ref{eq:
 	\caption{Kullback-Leibler Distance}
   \label{eq:kl-distance}
 \end{cequation}
+
+\subsubsection{Kullback-leibler Divergence}
+To illustrate how KL is calculated an example for the search term "sky" is shown.
+To keep this example short only the top 5 terms is calculated.
 
 [add example][??]
