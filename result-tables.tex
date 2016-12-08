@@ -1,0 +1,55 @@
+\begin{table}
+    \centering
+    \begin{tabular}{c|l|l}
+
+    Concurrent requests & Average (ms) & Median (ms) \\ \hline
+    1                   & 8            & 7           \\ \hline
+    5                   & 13           & 13          \\ \hline
+    10                  & 20           & 20          \\ \hline
+    15                  & 28           & 28          \\ \hline
+    20                  & 34           & 35          \\ \hline
+    30                  & 49           & 50          \\ \hline
+    40                  & 63           & 63          \\ \hline
+    50                  & 73           & 74          \\ \hline
+    100                 & 123          & 115         \\ \hline
+    150                 & 260          & 226         \\ \hline
+    \end{tabular}
+    \caption{Response times without query expansion}
+    \label{tbl:baseline}
+\end{table}
+
+\begin{table}
+    \centering
+    \begin{tabular}{c|l|l}
+     Concurrent requests & Average (ms) & Median (ms) \\ \hline
+    1                    & 16           & 14          \\ \hline
+    5                    & 29           & 28          \\ \hline
+    10                   & 49           & 49          \\ \hline
+    15                   & 74           & 69          \\ \hline
+    20                   & 97           & 96          \\ \hline
+    30                   & 183          & 199         \\ \hline
+    40                   & 219          & 198         \\ \hline
+    50                   & 249          & 242         \\ \hline
+    100                  & 476          & 428         \\ \hline
+    150                  & 731          & 717         \\ \hline
+    \end{tabular}
+    \caption{Response time with query expansion}
+    \label{tbl:query-expansion}
+\end{table}
+
+\begin{table}
+    \centering
+    \begin{tabular}{c|l|l}
+     Number of top-k documents & Average (ms) & Median (ms) \\ \hline
+    10                         & 49           & 49          \\ \hline
+    15                         & 56           & 51          \\ \hline
+    20                         & 54           & 53          \\ \hline
+    30                         & 57           & 53          \\ \hline
+    40                         & 57           & 54          \\ \hline
+    50                         & 58           & 56          \\ \hline
+    100                        & 64           & 62          \\ \hline
+    200                        & 76           & 72          \\ \hline
+    \end{tabular}
+    \caption{Response time while changing number of top-k documents}
+    \label{tbl:query-expansion-topk}
+\end{table}

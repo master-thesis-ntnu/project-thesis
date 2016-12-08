@@ -9,7 +9,7 @@ As the API limits the number of requests per hour, the data had to be collected 
 The test data was gathered from this endpoint over a time period of about 4 weeks.
 
 The internal representation in Elasticsearch of the data from Flickr can be seen in appendix \ref{ap:flickr-data}.
-This data contains [??] photos and [??] tags, and takes up [??] MB in Elasticsearch.
+This data contains 115,105 photos and 298,962 tags, and the photo index takes up 152.3 MB in Elasticsearch.
 Dynamic mapping was used for defining the fields for the internal representation in Elasticsearch.
 A single index called \textit{photos} was used to hold the photo data.
 
@@ -35,9 +35,9 @@ The experiment were conducted on a desktop computer with the specification descr
     \centering
     \begin{tabular}{c|c}
       \textbf{Component} & \textbf{Model} \\ \hline
-      CPU       & Intel Core i5           \\ \hline
-      RAM       & 16 GB                   \\ \hline
-      SSD       & 256 GB                  \\ \hline
+      CPU       & Intel Core i5-4670 3.4 GHz x 4        \\ \hline
+      RAM       & Crucial BallistixSport 2x8GB 1600 MHz \\ \hline
+      SSD       & OCZ Vertex 4 256 GB                   \\ \hline
     \end{tabular}
     \caption{Hardware components of the computer running the experiments}
     \label{tbl:hardware}
@@ -56,9 +56,7 @@ Figure \ref{fig:baseline} displays results from queries without query expansion.
 The results without query expansion is used as a baseline,
 to establish how much impact query expansion has on the respons times.
 
-\input{results-baseline}
-\input{results-query-expansion}
-\input{results-query-expansion-topk}
+\input{result-tables}
 
 \section{Discussion}
 Figure \ref{fig:sequence-diagram-search-master} shows the sequence diagram for Rudihagen's query expansion solution using KL.
