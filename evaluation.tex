@@ -1,6 +1,6 @@
 \chapter{Evaluation}
 \label{ch:evaluation}
-The evaluation chapter describes the experiment setup and the results.
+The evaluation chapter describes the experimental setup, the dataset and the results.
 
 \section{Dataset}
 The dataset consists of data from the Flickr API \footnote{\url{https://www.flickr.com/services/api/}}.
@@ -11,49 +11,79 @@ The test data was gathered from this endpoint over a time period of about 4 week
 The internal representation in Elasticsearch of the data from Flickr can be seen in appendix \ref{ap:flickr-data}.
 This data contains 115,105 photos and 298,962 tags, and the photo index takes up 152.3 MB in Elasticsearch.
 Dynamic mapping was used for defining the fields for the internal representation in Elasticsearch.
+On a production environment the most optimal setting would be to use Elasticsearch's explicit mapping.
 A single index called \textit{photos} was used to hold the photo data.
 
 \section{Experimental Setup}
-The experiment setup consists of a client, a web server and a search engine.
-Figure \ref{fig:experiment-setup} illustrates the experiment setup.
-In this experiment the backend was set up on a desktop having the specifications given in table \ref{tbl:hardware}.
-As a client a laptop using a command line tool called \texttt{ab}, which is Apache HTTP server benchmarking tool \cite{apache-benchmark}.
+The experimental setup contains of two main parts, a client and a web server.
+A laptop was used as the client and a desktop as the web server.
+Both computer was placed on the some local network.
+The hardware specification of the laptop was: Intel Core i7 2.50 GHz x 4 and 8 GB DDR3L RAM,
+and the desktop had the following specifications: Intel Core i5 3.40 GHz x 4 and 16 GB of DDR3 RAM.
 
-\begin{figure}[h!]
-  \centering \includegraphics[width=0.9\linewidth]{img/experiment_setup.png}
-  \caption{Experiment setup}
-  \label{fig:experiment-setup}
-\end{figure}
-
+The web server contained both Elasticsearch and the NodeJS web server.
 Elasticsearch's configuration was set to default settings,
-except the memory heap size was changed to 4GB to make sure the search engine had sufficient memory.
+except that the memory heap size was changed from the default value of 2 GB to 4 GB.
+Elasticsearch v5.0.0 was used during the experiment.
 
-\begin{table}[h]
-    \centering
-    \begin{tabular}{c|c}
-      \textbf{Component} & \textbf{Model} \\ \hline
-      CPU       & Intel Core i5-4670 3.4 GHz x 4        \\ \hline
-      RAM       & Crucial BallistixSport 2x8GB 1600 MHz \\ \hline
-      SSD       & OCZ Vertex 4 256 GB                   \\ \hline
-    \end{tabular}
-    \caption{Hardware components of the computer running the experiments}
-    \label{tbl:hardware}
-\end{table}
+As mentioned earlier NodeJS was configured to use the internal clustering functionality.
+Using a desktop with 4 cores the web server were running 4 instances of NodeJS.
+NodeJS accessed Elasticsearch through the available HTTP REST API \cite{elasticsearch-rest-api}.
+
+\subsection{Performance Metrics}
+The performance metric used in this experiment was latency.
+Latency was measure from when the request left the laptop to the response retrieved.
+The command line tool called \texttt{ab} \cite{apache-benchmark} was used to evaluate the latency.
+
+
+%Figure \ref{fig:experiment-setup} illustrates the experiment setup.
+%\begin{figure}[h!]
+%  \centering \includegraphics[width=0.9\linewidth]{img/experiment_setup.png}
+%  \caption{Experiment setup}
+%  \label{fig:experiment-setup}
+%\end{figure}
+
+%\begin{table}[h]
+%    \centering
+%    \begin{tabular}{c|c}
+%      \textbf{Component} & \textbf{Model} \\ \hline
+%      CPU       & Intel Core i5-4670 3.4 GHz x 4        \\ \hline
+%      RAM       & Crucial BallistixSport 2x8GB 1600 MHz \\ \hline
+%      SSD       & OCZ Vertex 4 256 GB                   \\ \hline
+%    \end{tabular}
+%    \caption{Hardware components of the computer running the experiments}
+%    \label{tbl:hardware}
+%\end{table}
 
 \section{Results}
-Measuring document relevance from users were never done as the main focus was latency and scaleability.
-Latency was measure from the laptop on the same local network.
-As both the server and the client were on the same local network the latency were minimal.
+Elasticsearch caches frequently used aggregations.
+To utilize this feature of Elasticsearch the same query was sent each time.
+The query contained the top 5 most popular tags from the dataset: \textit{"square" "iphoneography" "squareformat" "instagramapp" "uploaded:by=instagram"}.
+Each request was sent 1000 times, and the average and median latency was calculated.
 
-Both the web server and the search engine is on the same physical machine the round trip times are minimal.
-However, in practice round trip times is often an important factor.
+Three different types of tests were conducted: query without expansion query with expansion and a query were the number of top-k documents varied.
+The first two tests varied the number of concurrent requests from 1 to 150.
+While the last request had a fixed number of concurrent request at 10,
+but varied the number of top-k documents from 10 to 200.
 
-Figure \ref{fig:baseline} displays results from queries without query expansion.
-The results without query expansion is used as a baseline,
-to establish how much impact query expansion has on the respons times.
-From the tabel one can see that
+To measure the impact of query expansion a baseline is needed.
+The baseline results where retrieved by using the same terms but withouth the query expansion.
+Table \ref{tbl:baseline} displays results from the baseline test.
+From the table we can see that the backend were able to handle between 50 and 100 concurrent requests and still meet the interactivity requirement.
 
-query terms: square iphoneography squareformat instagramapp uploaded:by=instagram
+The test results from the requests with query expansion are listed in table \ref{tbl:query-expansion}.
+In the table one can see that query expansion have a clear impact on the latency, even with only one concurrent request.
+Nevertheless, the query expansion is able to meet the interactivity with up to 20 concurrent requests.
+Compared to the results from the baseline,
+the query expansion implementation is able to handle less than half the number of request.
+
+On the last test the number of top-k documents were varied and the results are listed in table \ref{tbl:query-expansion-topk}.
+To make sure the web server wasn't the bottleneck, the number of concurrent requests were fixed at 10.
+As k increases from 10 to 200 the latency increases.
+From the table one can see that varying the k has little impact on the performance.
+The latency increased from below 50 ms to between 70 and 80 ms, which is still within the interactivity requirement.
+The increased latency is most likely due to the query expansion step on the web server,
+the increased data size from Elasticsearch and from Elasticsearch itself.
 
 \input{result-tables}
 

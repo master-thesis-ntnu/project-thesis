@@ -1,7 +1,6 @@
-\begin{table}
+\begin{table}[h]
     \centering
     \begin{tabular}{c|l|l}
-
     Concurrent requests & Average (ms) & Median (ms) \\ \hline
     1                   & 8            & 7           \\ \hline
     5                   & 13           & 13          \\ \hline
@@ -18,7 +17,7 @@
     \label{tbl:baseline}
 \end{table}
 
-\begin{table}
+\begin{table}[h]
     \centering
     \begin{tabular}{c|l|l}
      Concurrent requests & Average (ms) & Median (ms) \\ \hline
@@ -33,11 +32,11 @@
     100                  & 476          & 428         \\ \hline
     150                  & 731          & 717         \\ \hline
     \end{tabular}
-    \caption{Response time with query expansion}
+    \caption{Response times with query expansion}
     \label{tbl:query-expansion}
 \end{table}
 
-\begin{table}
+\begin{table}[h]
     \centering
     \begin{tabular}{c|l|l}
      Number of top-k documents & Average (ms) & Median (ms) \\ \hline
@@ -50,6 +49,6 @@
     100                        & 64           & 62          \\ \hline
     200                        & 76           & 72          \\ \hline
     \end{tabular}
-    \caption{Response time while changing number of top-k documents}
+    \caption{Response times while changing number of top-k documents}
     \label{tbl:query-expansion-topk}
 \end{table}
