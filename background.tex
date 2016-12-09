@@ -160,7 +160,14 @@ Section \ref{sec:query-expansion} describes a method to extract information from
 
 \section{Query Expansion}
 \label{sec:query-expansion}
-[Write about Query expansion][??]
+When a user search with the query "Super Bowl" the day after the sport event has taken place,
+it is likely that the user wants information about the event from the day before.
+The query "Super Bowl" is likely to also return documents from previous years.
+If the search engine could be able to notice that recent documents also contains the term "2016,"
+the extra term could be added to the query.
+The new query "Super Bowl 2016" is likely to rank documents from this year's superbowl higher, as a result of the extra term.
+This technique is called query expansion. [maybe move to a different section][??]
+
 The idea behind query expansion is to add more terms to the users query, and then use the extended query on the search engine.
 According to literature a query expanded search does improve the results \cite[ch. 5]{ir-book}.
 Even though research shows promissing results, query expansions require explicit information which in practice often is difficult to acquire.
@@ -174,8 +181,8 @@ Kullback-Leibler is implemented in this project report, and the implementation i
 The variables in distribution P(t) and Q(t) is explained in the bullet points bellow.
 
 \begin{itemize}
-	\item \textit{numberOfTimesInTopKDocuments} is the number of times a term is given present in the top k documents
-	\item \textit{numberOfTermsInTopKDocuments} is the number of terms in total in the top k documents
+	\item \textit{numberOfTimesInTopKDocuments} is the number of times a term is present in the top-k documents
+	\item \textit{numberOfTermsInTopKDocuments} is the number of terms in total in the top-k documents
 	\item \textit{totalNumberOfTimesInCollection} is the total number of times a term is present in the data collection
 	\item \textit{totalNumberOfTermsInCollection} is the total number of terms in the data collection
 \end{itemize}
@@ -212,8 +219,43 @@ Computing the Kullback-Leibler distance for a term is given by equation \ref{eq:
   \label{eq:kl-distance}
 \end{cequation}
 
-\subsubsection{Kullback-leibler Divergence}
-To illustrate how KL is calculated an example for the search term "sky" is shown.
+\subsubsection{Kullback-leibler Divergence Example}
+To illustrate how KL score is calculated an example for the search term "sky" is shown.
 To keep this example short only the top 5 terms is calculated.
+The dataset used is the same the data set used in the evaluation chapter.
+
+Table \ref{tbl:kl-counts} contains the count for each variable returned from the backend solution.
+Using equation \ref{eq:kl-distance} the KL score for each term are calculated and is shown in table \ref{tbl:kl-score}.
+
+\begin{table}
+	\centering
+    \begin{tabular}{l|p{30mm}|p{30mm}|p{30mm}|p{30mm}}
+    Term   & numberOf- \newline TimesInTopK- \newline Documents &
+	numberOf- \newline TermsInTopK- \newline Documents &
+	totalNumber- \newline OfTimesIn- \newline Collection &
+	totalNumber- \newline OfTermsIn- \newline Collection \\ \hline
+    blue   & 1                            & 42                           & 14                             & 298962                         \\ \hline
+    2016   & 2                            & 42                           & 143                            & 298962                         \\ \hline
+    clouds & 3                            & 42                           & 31                             & 298962                         \\ \hline
+    sea    & 1                            & 42                           & 34                             & 298962                         \\ \hline
+    water  & 1                            & 42                           & 24                             & 298962                         \\ \hline
+\end{tabular}
+	\label{tbl:kl-counts}
+	\caption{The returned numbers for each of the top 5 terms excluding the term "sky"}
+\end{table}
+
+\begin{table}
+	\centering
+    \begin{tabular}{l|l}
+    Term   & Score   \\ \hline
+    clouds & 0.46678 \\ \hline
+    2016   & 0.21908 \\ \hline
+    blue   & 0.14836 \\ \hline
+    water  & 0.13553 \\ \hline
+    sea    & 0.12723 \\ \hline
+    \end{tabular}
+	\label{tbl:kl-score}
+	\caption{KL divergence score of each term}
+\end{table}
 
 [add example][??]
