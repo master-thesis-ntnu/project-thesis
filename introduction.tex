@@ -6,20 +6,22 @@ Nonetheless, a second important factor is speed and users require the service to
 Interactive services have a requirement to deliver results within 100ms \cite{google-latency}.
 
 Today an increasing number of software companies try to personalize their services.
-A few examples of personalized services are Facebook's news feed, Netfix's movie suggestion and Spotifi's Discover Weekly.
+A few examples of personalized services are Facebook's News Feed\footnote{\url{https://newsroom.fb.com/news/category/news-feed-fyi/}},
+Netfix's movie suggestion \cite{netflix-recommendation} and Spotify's Discover Weekly\footnote{\url{https://community.spotify.com/t5/Spotify-Community-Blog/On-Track-Discover-Weekly/ba-p/1456790}}.
 
 High latency may lead to users abondoning your site and lost revenue.
 Returning results fast, is more important compared to the number of results returned.
 While conducting latency experiments Google found that an increased latency of 0.5 seconds, lead to 20\% less traffic \cite{google-marissa}.
 
 This project report builds on and extends the work done by Juul Arthur R Rudihagen \cite{master-thesis}.
-In this work Rudihagen researched how an instant personalized search could be achieved.
+Rudihagen researched how an instant personalized search could be achieved.
 The research achieved a personalized search which returned results of higher relevance to the user.
-However, the results from the work showed that the implemented method did not meet the requirement of interactivity \cite[master-thesis].
+However, the results from the work showed that the implemented method did not meet the requirement of interactivity \cite{master-thesis}.
 
-This project report examines how a fast and scaleable search may be achieved, with the research done by Rudihagen as a baseline.
+The following report examines how a fast and scaleable search may be achieved, with the research done by Rudihagen as a baseline.
 His search implementations had limits towards latency and scalability.
 A major part of the latency came from multiple round trips from the webserver to the database and the search engine.
+During the report we will look at how the latency may be reduced.
 
 \section{Problem specification}
 This project report tries to answer the following research questions, with the main focus being research question \ref{rq:scaling} and \ref{rq:latency}.
@@ -32,16 +34,16 @@ This project report tries to answer the following research questions, with the m
 \end{enumerate}
 
 \section{Structure}
-This project thesis consists of 5 chapters: Background, Related Work, Approach, Evaluation and a Conclusion.
+This project report consists of 5 chapters: Background, Related Work, Approach, Evaluation and a Conclusion.
 First the \hyperref[ch:background]{Background} chapter introduces theory about search engines,
 query expansion and the technology and method used for testing the implementation.
 Chapter \hyperref[ch:related-work]{Related Work} describes related reasearch on personalized search.
-The master thesis this project thesis is based on is also introduced.
-The chapter \hyperref[ch:approach]{Approach} describes the implemented query expansion and how the web server were configured.
+The master thesis this project report is based on is also introduced.
+The chapter \hyperref[ch:approach]{Approach} describes the implemented query expansion and how the web server was configured.
 Next, the chapter \hyperref[ch:evaluation]{Evaluation} outlines how the experiments were conducted and the results from the experiments.
 The last section discusses the results and makes a comparison with the work by Rudihagen \cite{master-thesis}.
 Lastly, the \hyperref[ch:conclusion]{Conclusion} chapter gives a brief summary of the results and the implementation.
-And ends with a section about futher work which can be done to improve the current implementation.
+And ends with a section about further work which can be done to improve the current implementation.
 
 %\textbf{ \ref{ch:background}. Background: } Introduces theory about search engines, query expansion and the technology used for testing. \\
 %\textbf{ \ref{ch:related-work}. Related Work:} Describes related research on personalized search. \\
