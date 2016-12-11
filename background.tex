@@ -9,15 +9,15 @@ Lastly, relevance feedback is described and how it may be used with query expans
 The experiment in this project report utilized a web server and a search engine as the backend.
 This section gives a brief overview of the technologies used.
 
-NodeJS \footnote{\url{https://nodejs.org}} v7 were chosen as the webserver.
-NodeJS were chosen because the author of this project report had used it in multiple projects before,
-and it consists of a rich package system called NPM.
+NodeJS\footnote{\url{https://nodejs.org}} v7 were chosen as the webserver.
+NodeJS were chosen because the author has knowledge of the technology,
+and it contains a rich package manager called NPM.
 By utilizing open source libraries through NPM, more time could be spent implementing the algoritms for query expansion.
-Inside NodeJS lies the V8 \footnote{\url{https://developers.google.com/v8/}} JavaScript engine.
+Inside NodeJS lies the V8\footnote{\url{https://developers.google.com/v8/}} JavaScript engine.
 
-Elasticsearch \footnote{\url{https://www.elastic.co/products/elasticsearch}} v5 were utilized as the search engine.
+Elasticsearch\footnote{\url{https://www.elastic.co/products/elasticsearch}} v5 were utilized as the search engine.
 At the time of writing Elasticsearch is a popular open source search engines, which has proven the ability to scale up to petabytes of data \cite{elasticsearch-scale}.
-Elasticsearch is open source and built on top of Lucene \footnote{\url{https://lucene.apache.org/}}.
+Elasticsearch is open source and built on top of Lucene\footnote{\url{https://lucene.apache.org/}}.
 Lucene is the search engine itself,
 and Elasticsearch provides functionality for distribution and a REST API interface.
 
@@ -25,7 +25,7 @@ and Elasticsearch provides functionality for distribution and a REST API interfa
 A common approach for search engines is to use \textit{term frequency} (TF) and \textit{inverse document frequency} (IDF) to calculate a documents relevance based on a query.
 Documents with the highest TF from a query are believed to be the most relevant.
 On the other hand, the most common words are removed as they do not contain information about the topic.
-TF and IDF alone is a simple model, and Elasticsearch uses a more sofisticated model.
+TF and IDF alone is a simple model, and Elasticsearch uses a more sophisticated model.
 Elasticsearch's document scoring model are described in the following subsections.
 This section describes how Elasticsearch scores its documents and is based on the documentation found on the website \cite{elasticsearch-scoring}.
 
@@ -58,7 +58,7 @@ E.g. the terms "a" and "an" often appears in a sentence but should not be given 
 
 \subsection{Document Normalization}
 A title field is likely to be shorter compared to a description field.
-As a result description is possibly contains more mentions of a given term.
+As a result, the description field possibly contains more mentions of a given term.
 To account for longer fields document normalization is used.
 Elasticsearch's implementation is illustrated in equation \ref{eq:normalization}.
 
@@ -85,11 +85,12 @@ A documents score in Elasticsearch is given by the Equation \ref{eq:document-sco
 
 \subsection{Multiple term query}
 The document score function described in Section \ref{sec:doc-score} is only used when searching for a single term.
-When searching multiple terms the search Lucene \footnote{\url{http://lucene.apache.org/core/3_0_3/api/core/org/apache/lucene/search/Similarity.html}}
-are using multiple techniques: boolean model, TF/IDF and vector space model.
+While a term query contaning multiple terms requires a combination of techniques.
+A multiple term query inside Lucene combines the following techniques:
+boolean model, TF/IDF and vector space model.
 Equation \ref{eq:scoring-function} shows how each document are scored against a multiterm query.
 Table \ref{tbl:scoring-function} explaines each variable in equation \ref{eq:scoring-function}.
-A more in depth explenation is available at Elasticsearch's documentation \footnote{\url{https://www.elastic.co/guide/en/elasticsearch/guide/current/practical-scoring-function.html}}.
+A more in depth explenation is available at Elasticsearch's documentation\footnote{\url{https://www.elastic.co/guide/en/elasticsearch/guide/current/practical-scoring-function.html}}.
 
 \begin{cequation}
 	\begin{equation}
@@ -98,7 +99,7 @@ A more in depth explenation is available at Elasticsearch's documentation \footn
 														& \times \sum tf(t in d) \times idf(t)^2 \times t.getBoost() \times norm(t,d)
 		\end{aligned}
 	\end{equation}
-	\caption{Equaction for scoring documents when searching with multiple terms. Each variable are described in table \ref{tbl:scoring-function}}
+	\caption{Equation for scoring documents when searching with multiple terms. Each variable are described in table \ref{tbl:scoring-function}}
   \label{eq:scoring-function}
 \end{cequation}
 
@@ -133,8 +134,10 @@ and \textit{query expansion} as: "when information related to the query is used 
 In other words to use \textit{relevance feedback} input from the user is needed.
 For example the user could be given the task to mark each whether each document in the result were relevant or not.
 For \textit{query expansion} information like position and hashtags may be used to expand the query.
+A more detailed explanation of query expansion is described in section \ref{sec:query-expansion}.
 
-\textit{Relevance feedback} is divided into three main categories \textit{explicit feedback}, \textit{implicit feedback} and \textit{pseude-relevance feedback}.
+\textit{Relevance feedback} is divided into three main categories \textit{explicit feedback}, \textit{implicit feedback} and \textit{pseude-relevance feedback},
+and is introduced in the next two subsections.
 
 \subsection{Explicit vs Implicit Feedback}
 \textit{Explicit feedback} data are retrieved directly from user interaction.
@@ -152,11 +155,12 @@ collect which documents are view or not from a result, and measure time spent vi
 Retrieval of data to use relevance feedback requires either explicit or implicit user interaction.
 Manually involving the user in the search is undesireable.
 To avoid this an approach called pseudo-relevance feedback can be used.
+Using implicit feedback requires a system which does the data collection and post process the information.
+Pseudo-relevance on the other hand, uses information from the first search, which results in a simpler implementation.
 
-Often the top-k documents are often used to find pseudo-relevance for query expansion.
-However, the top-k documents are in many case not relevant, and thus not suitable data for query expansion \cite{pseudo-relevance-invalid}.
+Often the top-k documents are used to find pseudo-relevance for query expansion.
+However, the top-k documents are in many cases not relevant, and thus not suitable data for query expansion \cite{pseudo-relevance-invalid}.
 Section \ref{sec:query-expansion} describes a method to extract information from the top-k documents which is regarded as relevant information.
-[too short][??]
 
 \section{Query Expansion}
 \label{sec:query-expansion}
@@ -166,7 +170,7 @@ The query "Super Bowl" is likely to also return documents from previous years.
 If the search engine could be able to notice that recent documents also contains the term "2016,"
 the extra term could be added to the query.
 The new query "Super Bowl 2016" is likely to rank documents from this year's superbowl higher, as a result of the extra term.
-This technique is called query expansion. [maybe move to a different section][??]
+This technique is called query expansion.
 
 The idea behind query expansion is to add more terms to the users query, and then use the extended query on the search engine.
 According to literature a query expanded search does improve the results \cite[ch. 5]{ir-book}.
@@ -208,54 +212,57 @@ and equation \ref{eq:kl-distribution-q} explains how to calculate distribution Q
   \label{eq:kl-distribution-q}
 \end{cequation}
 
-Computing the Kullback-Leibler distance for a term is given by equation \ref{eq:kl-distance}.
+Computing the Kullback-Leibler divergence for a term is given by equation \ref{eq:kl-divergence}.
 
 % Kullback-Leibler Distance Equation
 \begin{cequation}[H]
 	\begin{equation}
 		\mathbf{KL}_D[P(t), Q(t)] = P(t)*\log{[\frac{P(t)}{Q(t)}]}
 	\end{equation}
-	\caption{Kullback-Leibler Distance}
-  \label{eq:kl-distance}
+	\caption{Kullback-Leibler Divergence}
+  \label{eq:kl-divergence}
 \end{cequation}
 
-\subsubsection{Kullback-leibler Divergence Example}
+\subsubsection{Kullback-Leibler Divergence Example}
 To illustrate how KL score is calculated an example for the search term "sky" is shown.
-To keep this example short only the top 5 terms is calculated.
-The dataset used is the same the data set used in the evaluation chapter.
+The expanded query may consist of up to 5 terms.
+To keep this example short only the top 5 terms is calculated and the term "sky" is excluded from the calculations.
 
-Table \ref{tbl:kl-counts} contains the count for each variable returned from the backend solution.
-Using equation \ref{eq:kl-distance} the KL score for each term are calculated and is shown in table \ref{tbl:kl-score}.
+Table \ref{tbl:kl-counts} contains information extracted using the dataset described in section \ref{sec:dataset}.
+Using equation \ref{eq:kl-divergence} and the information in the KL score for each term are calculated and is shown in table \ref{tbl:kl-score}.
+The table \ref{tbl:kl-score} lists the terms descending according to their score.
+From before we have the term "sky" and we may use 4 more to complete the expansion.
+The top 4 terms are "clouds", "2016", "blue" and "water".
+Which results in an expanded query containg the terms: "sky", "clouds", "2016", "blue" and "water".
+
 
 \begin{table}
 	\centering
     \begin{tabular}{l|p{30mm}|p{30mm}|p{30mm}|p{30mm}}
-    Term   & numberOf- \newline TimesInTopK- \newline Documents &
-	numberOf- \newline TermsInTopK- \newline Documents &
-	totalNumber- \newline OfTimesIn- \newline Collection &
-	totalNumber- \newline OfTermsIn- \newline Collection \\ \hline
-    blue   & 1                            & 42                           & 14                             & 298962                         \\ \hline
-    2016   & 2                            & 42                           & 143                            & 298962                         \\ \hline
-    clouds & 3                            & 42                           & 31                             & 298962                         \\ \hline
-    sea    & 1                            & 42                           & 34                             & 298962                         \\ \hline
-    water  & 1                            & 42                           & 24                             & 298962                         \\ \hline
+    \textbf{Term}   & \textbf{numberOf- \newline TimesIn- \newline TopK- \newline Documents} &
+	\textbf{numberOf- \newline TermsIn- \newline TopK- \newline Documents} &
+	\textbf{totalNumber- \newline OfTimesIn- \newline Collection} &
+	\textbf{totalNumber- \newline OfTermsIn- \newline Collection} \\ \hline
+    blue   & 1                            & 42                           & 14                             & 298,962                         \\ \hline
+    2016   & 2                            & 42                           & 143                            & 298,962                         \\ \hline
+    clouds & 3                            & 42                           & 31                             & 298,962                         \\ \hline
+    sea    & 1                            & 42                           & 34                             & 298,962                         \\ \hline
+    water  & 1                            & 42                           & 24                             & 298,962                         \\ \hline
 \end{tabular}
-	\label{tbl:kl-counts}
 	\caption{The returned numbers for each of the top 5 terms excluding the term "sky"}
+	\label{tbl:kl-counts}
 \end{table}
 
 \begin{table}
 	\centering
     \begin{tabular}{l|l}
-    Term   & Score   \\ \hline
+    \textbf{Term}   & \textbf{Score}   \\ \hline
     clouds & 0.46678 \\ \hline
     2016   & 0.21908 \\ \hline
     blue   & 0.14836 \\ \hline
     water  & 0.13553 \\ \hline
     sea    & 0.12723 \\ \hline
     \end{tabular}
-	\label{tbl:kl-score}
 	\caption{KL divergence score of each term}
+	\label{tbl:kl-score}
 \end{table}
-
-[add example][??]
