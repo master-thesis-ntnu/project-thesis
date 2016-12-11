@@ -7,7 +7,7 @@ One of the main goal in this project thesis was to achieve lower latency and bet
 The experiment's performance measure was latency.
 
 Figure \ref{fig:sequence-diagram-search} shows the experiments sequence diagram.
-First the a HTTP request arrives the web server.
+First the HTTP request arrives the web server.
 The search terms are extracted from the user\'s query.
 In this experiment, the extracted terms are searched against photo tags.
 The initial query sent to Elasticsearch can be seen in appendix \ref{ap:initial-query},
@@ -35,13 +35,15 @@ Results from the last query is given directly back to the user without any post-
 
 \begin{figure}[h!]
 \centering \includegraphics[width=0.9\linewidth]{img/sequence-diagram-search.png}
-\caption{Sequence diagram for the search experiment}
+\caption{Sequence diagram for the query expansion experiment}
 \label{fig:sequence-diagram-search}
 \end{figure}
 
 \section{NodeJS Configuration}
 A NodeJS instance only runs on a single thread.
-Todays servers tend to have multiple cores, and one each NodeJS instance is require for full system utilization.
+Todays servers often have multiple cores.
+Therefore a system with a quad core processor, require four instances of NodeJS to run, for full system utilization.
 To handle multi-core servers, NodeJS contains a feature called clustering.
-The cluster library  inside NodeJS can create multiple instances which servers the same port.
+The cluster library inside NodeJS can create multiple instances which servers the same port.
+This eliminates NodeJS as the bottleneck of the system.
 As a result the traffic is distributed evenly between all the CPU cores.
