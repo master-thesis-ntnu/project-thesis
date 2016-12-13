@@ -34,10 +34,11 @@ The query used for the final search is available in appendix \ref{ap:final-query
 Results from the last query is given directly back to the user without any post-processing.
 
 \subsection{Baseline Search Implementation}
-To know the impact of the query expansion a baseline is needed.
-The implemented baseline query is shown in figure \ref{fig:sequence-diagram-search-baseline}.
+To measure the impact of the query expansion a baseline is needed.
+The sequence diagram for the baseline query is shown in figure \ref{fig:sequence-diagram-search-baseline}.
 From the figure we can see that the search result is immediately returned to user without any post processing step on the backend,
 which is present the query expansion implementation.
+The baseline's query against Elasticsearch is shown in appendix \ref{ap:initial-query}.
 
 \begin{figure}[h!]
 \centering \includegraphics[width=0.9\linewidth]{img/sequence-diagram-search-baseline.png}

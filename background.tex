@@ -238,11 +238,12 @@ Which results in an expanded query containg the terms: "sky", "clouds", "2016", 
 
 \begin{table}
 	\centering
-    \begin{tabular}{l|p{30mm}|p{30mm}|p{30mm}|p{30mm}}
+    \begin{tabular}{|l|p{30mm}|p{30mm}|p{30mm}|p{30mm}|}
+		\hline
     \textbf{Term}   & \textbf{numberOf- \newline TimesIn- \newline TopK- \newline Documents} &
-	\textbf{numberOf- \newline TermsIn- \newline TopK- \newline Documents} &
-	\textbf{totalNumber- \newline OfTimesIn- \newline Collection} &
-	\textbf{totalNumber- \newline OfTermsIn- \newline Collection} \\ \hline
+		\textbf{numberOf- \newline TermsIn- \newline TopK- \newline Documents} &
+		\textbf{totalNumber- \newline OfTimesIn- \newline Collection} &
+		\textbf{totalNumber- \newline OfTermsIn- \newline Collection} \\ \hline
     blue   & 1                            & 42                           & 14                             & 298,962                         \\ \hline
     2016   & 2                            & 42                           & 143                            & 298,962                         \\ \hline
     clouds & 3                            & 42                           & 31                             & 298,962                         \\ \hline
@@ -255,7 +256,8 @@ Which results in an expanded query containg the terms: "sky", "clouds", "2016", 
 
 \begin{table}
 	\centering
-    \begin{tabular}{l|l}
+    \begin{tabular}{|l|l|}
+		\hline
     \textbf{Term}   & \textbf{Score}   \\ \hline
     clouds & 0.46678 \\ \hline
     2016   & 0.21908 \\ \hline

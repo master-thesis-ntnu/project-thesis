@@ -1,13 +1,32 @@
 \chapter{Conclusion \& Futher Work}
 \label{ch:conclusion}
 This chapter discuss the query expansion implementation and compares it to Rudihagen's implementation.
-Lastly, the writer suggest possible improvements to futher increase performance.
+Lastly, possible improvements are suggested to futher increase performance in terms of latency and relevance.
+
+\section{Conclusion}
+This report explored the possibilities to achieve instant search with query expansion.
+The implementation involves the search engine Elasticsearch, as it has proven to scale with large amounts of data.
+
+From the results we see that the implementation
+
 
 \section{Futher Work}
 After implementing a query expansion which requires two round trips there is still room for improvement.
-To achieve only one round trip the author suggest one of the two following solutions:
-use Elasticsearch's scripting functionality to evaluate custom expressions \footnote{\url{https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting.html}},
-or implement query expansion in Lucene and expose the feature in Elasticsearch's API.
+To achieve only one round trip, the two following solutions should be explored:
+use Elasticsearch's scripting functionality to evaluate custom expressions\footnote{\url{https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting.html}},
+or implement query expansion in Lucene and expose the feature through Elasticsearch's API.
+
+There are photos from the dataset which doesn't contain any tags,
+and the current implementation only searches the tag field.
+This constraint means that photos without any will have the lowest document score, and thus never be visible in the results.
+To handle the problem an improved implementation should use more text features as title and description.
+
+Evaluating the
+[real world setup]
+
+As mentioned earlier the document relevance was not measured.
+In further work, the result's relevance should be measured, too assure that the query expansion indeed increases result relevance.
+
 
 [Using more features e.g. location and time]
 Implement other query expansion techniques rochio
