@@ -1,29 +1,31 @@
 \begin{table}[h]
     \centering
-    \begin{tabular}{c|l|l}
-    Concurrent requests & Average (ms) & Median (ms) \\ \hline
-    1                   & 8            & 7           \\ \hline
-    5                   & 13           & 13          \\ \hline
-    10                  & 20           & 20          \\ \hline
-    15                  & 28           & 28          \\ \hline
-    20                  & 34           & 35          \\ \hline
-    30                  & 49           & 50          \\ \hline
-    40                  & 63           & 63          \\ \hline
+    \begin{tabular}{|c|l|l|}
+    \hline
+    \textbf{Concurrent requests} & \textbf{Average (ms)} & \textbf{Median (ms)} \\ \hline
+    \textbf{1}          & \textbf{8}   & \textbf{7}           \\ \hline
+    \textbf{5}          & \textbf{13}  & \textbf{13}          \\ \hline
+    \textbf{10}         & \textbf{20}  & \textbf{20}          \\ \hline
+    \textbf{15}         & \textbf{28}  & \textbf{28}          \\ \hline
+    \textbf{20}         & \textbf{34}  & \textbf{35}          \\ \hline
+    \textbf{30}         & \textbf{49}  & \textbf{50}          \\ \hline
+    \textbf{40}         & \textbf{63}  & \textbf{63}          \\ \hline
     \textbf{50}         & \textbf{73}  & \textbf{74} \\ \hline
     100                 & 123          & 115         \\ \hline
     150                 & 260          & 226         \\ \hline
     \end{tabular}
-    \caption{Response times without query expansion}
+    \caption{Response times without query expansion. All results within the interactivity limit of 100 ms are in bold.}
     \label{tbl:baseline}
 \end{table}
 
 \begin{table}[h]
     \centering
-    \begin{tabular}{c|l|l}
-     Concurrent requests & Average (ms) & Median (ms) \\ \hline
-    1                    & 16           & 14          \\ \hline
-    5                    & 29           & 28          \\ \hline
-    10                   & 49           & 49          \\ \hline
+    \begin{tabular}{|c|l|l|}
+    \hline
+    \textbf{Concurrent requests} & \textbf{Average (ms)} & \textbf{Median (ms)} \\ \hline
+    \textbf{1}           & \textbf{16}  & \textbf{14} \\ \hline
+    \textbf{5}           & \textbf{29}  & \textbf{28} \\ \hline
+    \textbf{10}          & \textbf{49}  & \textbf{49} \\ \hline
     \textbf{15}          & \textbf{74}  & \textbf{69} \\ \hline
     \textbf{20}          & \textbf{97}  & \textbf{96} \\ \hline
     30                   & 183          & 199         \\ \hline
@@ -32,14 +34,15 @@
     100                  & 476          & 428         \\ \hline
     150                  & 731          & 717         \\ \hline
     \end{tabular}
-    \caption{Response times with query expansion}
+    \caption{Response times with query expansion. All results within the interactivity limit of 100 ms are in bold.}
     \label{tbl:query-expansion}
 \end{table}
 
 \begin{table}[h]
     \centering
-    \begin{tabular}{c|l|l}
-     Number of top-k documents & Average (ms) & Median (ms) \\ \hline
+    \begin{tabular}{|c|l|l|}
+    \hline
+    \textbf{Number of top-k documents} & \textbf{Average (ms)} & \textbf{Median (ms)} \\ \hline
     10                         & 49           & 49          \\ \hline
     15                         & 56           & 51          \\ \hline
     20                         & 54           & 53          \\ \hline
@@ -49,6 +52,6 @@
     100                        & 64           & 62          \\ \hline
     200                        & 76           & 72          \\ \hline
     \end{tabular}
-    \caption{Response times while changing number of top-k documents}
+    \caption{Response times while changing number of top-k documents.}
     \label{tbl:query-expansion-topk}
 \end{table}
