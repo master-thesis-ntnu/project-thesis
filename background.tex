@@ -1,16 +1,16 @@
 \chapter{Background}
 \label{ch:background}
-This chapter explains important theory and techniques behind search engines.
-First the technologies used in the implementation are explained.
-Next the search engine is described and how it scores documents when quries are retrieved.
-Lastly, relevance feedback is described and how it may be used with query expansion.
+This chapter presents important theory and techniques behind search engines.
+First the technologies used in the implementation are explained,
+and this is followed by a detailed description on how the documents are scored inside the search engine from a query.
+Finally, relevance feedback is described as well as how it may be used in an query expansion.
 
 \section{Technology}
 The experiment in this project report utilized a web server and a search engine as the backend.
 This section gives a brief overview of the technologies used.
 
-NodeJS\footnote{\url{https://nodejs.org}} v7 were chosen as the webserver.
-NodeJS were chosen because the author has knowledge of the technology,
+NodeJS\footnote{\url{https://nodejs.org}} v7 was chosen as the webserver.
+NodeJS was chosen because the author has knowledge of the technology,
 and it contains a rich package manager called NPM.
 By utilizing open source libraries through NPM, more time could be spent implementing the algoritms for query expansion.
 Inside NodeJS lies the V8\footnote{\url{https://developers.google.com/v8/}} JavaScript engine.
@@ -22,11 +22,11 @@ Lucene is the search engine itself,
 and Elasticsearch provides functionality for distribution and a REST API interface.
 
 \section{Search Engine}
-A common approach for search engines is to use \textit{term frequency} (TF) and \textit{inverse document frequency} (IDF) to calculate a documents relevance based on a query.
+A common approach for search engines is to use \textit{term frequency} (TF) and \textit{inverse document frequency} (IDF) to calculate a document\'s relevance based on a query.
 Documents with the highest TF from a query are believed to be the most relevant.
 On the other hand, the most common words are removed as they do not contain information about the topic.
 TF and IDF alone is a simple model, and Elasticsearch uses a more sophisticated model.
-Elasticsearch's document scoring model are described in the following subsections.
+Elasticsearch's document scoring model is described in the following subsections.
 This section describes how Elasticsearch scores its documents and is based on the documentation found on the website \cite{elasticsearch-scoring}.
 
 \subsection{Term Frequency}
@@ -45,8 +45,8 @@ Term frequency calculation is given by Equation \ref{eq:term-frequency}.
 
 \subsection{Inverse Document Frequency}
 Inverse document frequency describes how many times a term is present in all the documents.
-Terms with high frequencies is often less relevant.
-E.g. the terms "a" and "an" often appears in a sentence but should not be given a high score even though they appear many times.
+Terms with high frequencies are often less relevant.
+E.g. the terms "a" and "an" often appears in a sentence but should not be given a high score even though they appear numerous times.
 
 \begin{cequation}[H]
 	\begin{equation}
@@ -58,7 +58,7 @@ E.g. the terms "a" and "an" often appears in a sentence but should not be given 
 
 \subsection{Document Normalization}
 A title field is likely to be shorter compared to a description field.
-As a result, the description field possibly contains more mentions of a given term.
+As a result, the description field possibly contains more instances of a given term.
 To account for longer fields document normalization is used.
 Elasticsearch's implementation is illustrated in equation \ref{eq:normalization}.
 
@@ -83,14 +83,14 @@ A documents score in Elasticsearch is given by the Equation \ref{eq:document-sco
   \label{eq:document-score}
 \end{cequation}
 
-\subsection{Multiple term query}
+\subsection{Multiple Term Query}
 The document score function described in Section \ref{sec:doc-score} is only used when searching for a single term.
-While a term query contaning multiple terms requires a combination of techniques.
+While a term query containing multiple terms requires a combination of techniques.
 A multiple term query inside Lucene combines the following techniques:
 boolean model, TF/IDF and vector space model.
 Equation \ref{eq:scoring-function} shows how each document are scored against a multiterm query.
 Table \ref{tbl:scoring-function} explaines each variable in equation \ref{eq:scoring-function}.
-A more in depth explenation is available at Elasticsearch's documentation\footnote{\url{https://www.elastic.co/guide/en/elasticsearch/guide/current/practical-scoring-function.html}}.
+A more in depth explanation is available at Elasticsearch's documentation\footnote{\url{https://www.elastic.co/guide/en/elasticsearch/guide/current/practical-scoring-function.html}}.
 
 \begin{cequation}
 	\begin{equation}
@@ -99,7 +99,7 @@ A more in depth explenation is available at Elasticsearch's documentation\footno
 														& \times \sum tf(t in d) \times idf(t)^2 \times t.getBoost() \times norm(t,d)
 		\end{aligned}
 	\end{equation}
-	\caption{Equation for scoring documents when searching with multiple terms. Each variable are described in table \ref{tbl:scoring-function}}
+	\caption{Equation for scoring documents when searching with multiple terms. Each variable is described in table \ref{tbl:scoring-function}}
   \label{eq:scoring-function}
 \end{cequation}
 
@@ -124,16 +124,17 @@ A more in depth explenation is available at Elasticsearch's documentation\footno
 \end{table}
 
 \section{Relevance Feedback}
-The idea behind \textit{relevance feedback} is to use the result from the initial query to extract relevant information about the top-k documents.
+The idea behind \textit{relevance feedback} is to use the result from the initial query to extract relevant information from the top-k documents.
 Once the information is extracted, a new query is executed with extracted information.
-Results from the second query is sent back to the user.
+Results from the second query are sent back to the user.
 The assumption is that the second query returns documents which are more relevant to the user.
 
 In \cite{ir-book} the authors define \textit{relevance feedback} as: "when the user explicitly provides information on relevant documents to a query,"
 and \textit{query expansion} as: "when information related to the query is used to expand it" \cite[p. 177]{ir-book}.
-In other words to use \textit{relevance feedback} input from the user is needed.
-For example the user could be given the task to mark each whether each document in the result were relevant or not.
-For \textit{query expansion} information like position and hashtags may be used to expand the query.
+In other words to use \textit{relevance feedback}, input from the user is needed.
+For example the user could be given the task to mark whether the documents are relevant or not.
+In practice it is often difficult for a user to determine the results relevance.
+For \textit{query expansion} information like position and tags may be used to expand the query.
 A more detailed explanation of query expansion is described in section \ref{sec:query-expansion}.
 
 \textit{Relevance feedback} is divided into three main categories \textit{explicit feedback}, \textit{implicit feedback} and \textit{pseude-relevance feedback},
@@ -141,22 +142,24 @@ and is introduced in the next two subsections.
 
 \subsection{Explicit vs Implicit Feedback}
 \textit{Explicit feedback} data are retrieved directly from user interaction.
-An example would let the user mark whether the results were relevant or not.
+An example would be if the user selects the section "graphic cards" in an online store.
+Then you know that the user wants a graphic card, but this is not applicable in all type of searches
 Another approach is to use data from a user search.
 If a user clicks a search result, the result may be regarded as relevant.
 Even though the result may not be relevant, it is a good indication.
-
 The problem with explicit feedback, is that it requires interaction from the user.
-\textit{Implicit feedback} on the other hand, doesn't require any involvement from the user.
+
+\textit{Implicit feedback} on the other hand, does not require any involvement from the user.
 Examples of implicit user data are:
-collect which documents are view or not from a result, and measure time spent viewing a document.
+collecting the documents from a search result that  are opened by a user,
+and measure time spent viewing a document.
 
 \subsection{Pseudo-Relevance Feedback}
 Retrieval of data to use relevance feedback requires either explicit or implicit user interaction.
 Manually involving the user in the search is undesireable.
 To avoid this an approach called pseudo-relevance feedback can be used.
 Using implicit feedback requires a system which does the data collection and post process the information.
-Pseudo-relevance on the other hand, uses information from the first search, which results in a simpler implementation.
+Pseudo-relevance on the other hand, uses information from the first search, and thus gives in a simpler implementation.
 
 Often the top-k documents are used to find pseudo-relevance for query expansion.
 However, the top-k documents are in many cases not relevant, and thus not suitable data for query expansion \cite{pseudo-relevance-invalid}.
@@ -164,7 +167,7 @@ Section \ref{sec:query-expansion} describes a method to extract information from
 
 \section{Query Expansion}
 \label{sec:query-expansion}
-When a user search with the query "Super Bowl" the day after the sport event has taken place,
+When a user searches using the query "Super Bowl" the day after the sport event has taken place,
 it is likely that the user wants information about the event from the day before.
 The query "Super Bowl" is likely to also return documents from previous years.
 If the search engine could be able to notice that recent documents also contains the term "2016,"
@@ -172,13 +175,13 @@ the extra term could be added to the query.
 The new query "Super Bowl 2016" is likely to rank documents from this year's superbowl higher, as a result of the extra term.
 This technique is called query expansion.
 
-The idea behind query expansion is to add more terms to the users query, and then use the extended query on the search engine.
+The idea behind query expansion is to add more terms to the user's query, and then use the extended query on the search engine.
 According to literature a query expanded search does improve the results \cite[ch. 5]{ir-book}.
-Even though research shows promissing results, query expansions require explicit information which in practice often is difficult to acquire.
+Even though research shows promising results, query expansions require explicit information which in practice often is difficult to acquire.
 On the other hand, according to Efron \cite{ir-hashtag} hashtags provides an excellent way to acquire the explicit information needed for query expansion.
 
-There exists different method of query expansion and this report describes two techniques called Kullback-Leibler divergence and Rochio standard equation.
-Kullback-Leibler is implemented in this project report, and the implementation is described in chapter \ref{ch:approach}.
+There are different methods of query expansion, and this report describes one technique called Kullback-Leibler divergence.
+The implementation is described in chapter \ref{ch:approach}.
 
 \subsection{Kullback-Leibler Divergence}
 \textit{Kullback-Leibler divergence} (KL) measures how well distribution P(t) represents the distribution Q(t).
@@ -224,16 +227,16 @@ Computing the Kullback-Leibler divergence for a term is given by equation \ref{e
 \end{cequation}
 
 \subsubsection{Kullback-Leibler Divergence Example}
-To illustrate how KL score is calculated an example for the search term "sky" is shown.
+To illustrate how KL score is calculated, an example for the search term "sky" is displayed.
 The expanded query may consist of up to 5 terms.
-To keep this example short only the top 5 terms is calculated and the term "sky" is excluded from the calculations.
+To keep this example short, only the top 5 terms is calculated and the term "sky" is excluded from the calculations.
 
-Table \ref{tbl:kl-counts} contains information extracted using the dataset described in section \ref{sec:dataset}.
-Using equation \ref{eq:kl-divergence} and the information in the KL score for each term are calculated and is shown in table \ref{tbl:kl-score}.
+Table \ref{tbl:kl-counts} contains information extracted using the data set described in section \ref{sec:dataset}.
+Using equation \ref{eq:kl-divergence} and the information in table \ref{tbl:kl-counts}, the KL score for each term are calculated and is shown in table \ref{tbl:kl-score}.
 The table \ref{tbl:kl-score} lists the terms descending according to their score.
-From before we have the term "sky" and we may use 4 more to complete the expansion.
-The top 4 terms are "clouds", "2016", "blue" and "water".
-Which results in an expanded query containg the terms: "sky", "clouds", "2016", "blue" and "water".
+From the original query we have the term "sky" and we may use 4 additional terms to complete the expansion.
+The top 4 terms are "clouds", "2016", "blue" and "water",
+which results in an expanded query containg the terms: "sky", "clouds", "2016", "blue" and "water".
 
 
 \begin{table}

@@ -1,7 +1,7 @@
 \chapter{Introduction}
 \section{Motivation}
 Search engines today strives to deliver fast and relevant search results.
-Most user may quickly notice whether the search results are relevant or not.
+Most users may quickly notice whether the search results are relevant or not.
 Nonetheless, a second important factor is speed and users require the service to be interactive.
 Interactive services have a requirement to deliver results within 100ms \cite{google-latency}.
 
@@ -9,19 +9,21 @@ Today an increasing number of software companies try to personalize their servic
 A few examples of personalized services are Facebook's News Feed\footnote{\url{https://newsroom.fb.com/news/category/news-feed-fyi/}},
 Netfix's movie suggestion \cite{netflix-recommendation} and Spotify's Discover Weekly\footnote{\url{https://community.spotify.com/t5/Spotify-Community-Blog/On-Track-Discover-Weekly/ba-p/1456790}}.
 
-High latency may lead to users abondoning your site and lost revenue.
-Returning results fast, is more important compared to the number of results returned.
-While conducting latency experiments Google found that an increased latency of 0.5 seconds, lead to 20\% less traffic \cite{google-marissa}.
+High latency may lead to users abandoning your site and revenue is easily lost.
+Returning results fast is more important compared to the number of results returned.
+While conducting latency experiments, Google found that an increased latency of 0.5 seconds, leads to 20\% less traffic \cite{google-marissa}.
 
 This project report builds on and extends the work done by Juul Arthur R Rudihagen \cite{master-thesis}.
 Rudihagen researched how an instant personalized search could be achieved.
 The research achieved a personalized search which returned results of higher relevance to the user.
 However, the results from the work showed that the implemented method did not meet the requirement of interactivity \cite{master-thesis}.
 
-The following report examines how a fast and scaleable search may be achieved, with the research done by Rudihagen as a baseline.
-His search implementations had limits towards latency and scalability.
-A major part of the latency came from multiple round trips from the webserver to the database and the search engine.
-During the report we will look at how the latency may be reduced.
+Furthermore, this report examines how a fast and scaleable search may be achieved, using the research done by Rudihagen as a baseline.
+His search implementations had limits both in latency and scalability.
+A major part of the latency in Rudihagen's report originated from multiple round trips from the webserver to the database and the search engine.
+
+In this report we will look at how the latency may be reduced and scalability increased,
+and based on Rudihagen's work this report have derived the research questions in the next section.
 
 \section{Problem Specification}
 \label{sec:problem-specification}
@@ -31,20 +33,20 @@ This project report tries to answer the following research questions, with the m
   %\item How to provide instant personalized recommendations on a cold start based on the query typed?
   \item How does the personalized recommendations give better results for the user?
   \item\label{rq:scaling} How to make the search recommandation scale with an increasing amount of data?
-  \item\label{rq:latency} How to develop search recommendation method that fulfill the interactive requirements?
+  \item\label{rq:latency} How to develop a search recommendation method that fulfills the interactive requirements?
 \end{enumerate}
 
 \section{Structure}
-This project report consists of 5 chapters: Background, Related Work, Approach, Evaluation and a Conclusion.
-First the \hyperref[ch:background]{Background} chapter introduces theory about search engines,
+The project report consists of 5 chapters: Background, Related Work, Approach, Evaluation and a Conclusion.
+The \hyperref[ch:background]{Background} chapter introduces theories on search engines,
 query expansion and the technology and method used for testing the implementation.
-Chapter \hyperref[ch:related-work]{Related Work} describes related reasearch on personalized search.
+The chapter \hyperref[ch:related-work]{Related Work} describes related reasearch on methods to improve result relevance.
 The master thesis this project report is based on is also introduced.
 The chapter \hyperref[ch:approach]{Approach} describes the implemented query expansion and how the web server was configured.
 Next, the chapter \hyperref[ch:evaluation]{Evaluation} outlines how the experiments were conducted and the results from the experiments.
 The last section discusses the results and makes a comparison with the work by Rudihagen \cite{master-thesis}.
 Lastly, the \hyperref[ch:conclusion]{Conclusion} chapter gives a brief summary of the results and the implementation.
-And ends with a section about further work which can be done to improve the current implementation.
+The last section suggests measurements that, if implemented , will improve the current implementation.
 
 %\textbf{ \ref{ch:background}. Background: } Introduces theory about search engines, query expansion and the technology used for testing. \\
 %\textbf{ \ref{ch:related-work}. Related Work:} Describes related research on personalized search. \\

@@ -1,31 +1,31 @@
 \chapter{Approach}
 \label{ch:approach}
-The approach chapter describes how the query expanded search is implemented on the backend and how the NodeJS was configured.
+The approach chapter describes how the query expanded search was implemented on the backend and how the NodeJS was configured.
 
 \section{Query Expansion Implementation}
-One of the main goal in this project thesis was to achieve lower latency and better scaleability compared to the KL search implemented in the master thesis done by Rudihagen \cite{master-thesis}.
+One of the main goals in this project thesis was to achieve lower latency and better scalability compared to the KL search implemented in the master thesis done by Rudihagen \cite{master-thesis}.
 The experiment's performance measure was latency.
 
-Figure \ref{fig:sequence-diagram-search} shows the experiments sequence diagram.
+Figure \ref{fig:sequence-diagram-search} shows the experiment's sequence diagram.
 First the HTTP request arrives the web server.
-The search terms are extracted from the user\'s query.
+The search terms are extracted from the user's query.
 In this experiment, the extracted terms are searched against photo tags.
 The initial query sent to Elasticsearch can be seen in appendix \ref{ap:initial-query},
 and consists of a term query and an aggregation query.
-From the term query the top 10 documents are returned.
+From the term query, the top 10 documents are returned.
 Each photo document contains an array of all the tags attached to the photo.
 The aggregation calculates the number of occurences for each tag and returns the top 50 tags.
 The number of occurences is the total number of documents a given tag is present in, from the complete collection.
 As a result, a highly important tag may be in the top 10 documents and not in the tag aggregation.
 A better solution would be to only aggregate on the tags from the term query result.
 
-From Elasticsearch all the top-k documents are returned together with an tag aggregation.
+From Elasticsearch all the top-k documents are returned together with a tag aggregation.
 The aggregation contains each tag with its corresponding document count.
 The aggregated count are all the occurences of the tag, and not the count of the top-k document.
 Tag count from the top-k documents are calculated from the returned photos.
 Each tag is given a score by calculating the KL value using equation \ref{eq:kl-distance}.
 
-After calculating the KL score for each term the query is expanded.
+After calculating the KL score for each term, the query is expanded.
 The initial search terms are kept, and the highest scored tags are then added to the expanded query.
 However, no more than a total of 10 search terms are used.
 
@@ -34,7 +34,7 @@ The query used for the final search is available in appendix \ref{ap:final-query
 Results from the last query is given directly back to the user without any post-processing.
 
 \subsection{Baseline Search Implementation}
-To measure the impact of the query expansion a baseline is needed.
+To measure the impact of the query expansion, a baseline is needed.
 The sequence diagram for the baseline query is shown in figure \ref{fig:sequence-diagram-search-baseline}.
 From the figure we can see that the search result is immediately returned to user without any post processing step on the backend,
 which is present the query expansion implementation.
@@ -54,9 +54,9 @@ The baseline's query against Elasticsearch is shown in appendix \ref{ap:initial-
 
 \section{NodeJS Configuration}
 A NodeJS instance only runs on a single thread.
-Todays servers often have multiple cores.
-Therefore a system with a quad core processor, require four instances of NodeJS to run, for full system utilization.
+Today's servers often have multiple cores.
+Therefore a system with a quad core processor, requires four instances of NodeJS to run, for full system utilization.
 To handle multi-core servers, NodeJS contains a feature called clustering.
-The cluster library inside NodeJS can create multiple instances which servers the same port.
+The cluster library inside NodeJS can create multiple instances which serves the same port.
 This eliminates NodeJS as the bottleneck of the system.
 As a result the traffic is distributed evenly between all the CPU cores.
