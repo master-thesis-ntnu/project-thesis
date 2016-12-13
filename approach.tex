@@ -1,8 +1,8 @@
 \chapter{Approach}
 \label{ch:approach}
-The approach chapter describes how the search is implemented on the backend and how the NodeJS was configured.
+The approach chapter describes how the query expanded search is implemented on the backend and how the NodeJS was configured.
 
-\section{Search Implementation}
+\section{Query Expansion Implementation}
 One of the main goal in this project thesis was to achieve lower latency and better scaleability compared to the KL search implemented in the master thesis done by Rudihagen \cite{master-thesis}.
 The experiment's performance measure was latency.
 
@@ -32,6 +32,18 @@ However, no more than a total of 10 search terms are used.
 Lastly, after calculating the new search terms, the new query is sent to Elasticsearch.
 The query used for the final search is available in appendix \ref{ap:final-query}.
 Results from the last query is given directly back to the user without any post-processing.
+
+\subsection{Baseline Search Implementation}
+To know the impact of the query expansion a baseline is needed.
+The implemented baseline query is shown in figure \ref{fig:sequence-diagram-search-baseline}.
+From the figure we can see that the search result is immediately returned to user without any post processing step on the backend,
+which is present the query expansion implementation.
+
+\begin{figure}[h!]
+\centering \includegraphics[width=0.9\linewidth]{img/sequence-diagram-search-baseline.png}
+\caption{Sequence diagram for the baseline search}
+\label{fig:sequence-diagram-search-baseline}
+\end{figure}
 
 \begin{figure}[h!]
 \centering \includegraphics[width=0.9\linewidth]{img/sequence-diagram-search.png}
