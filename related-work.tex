@@ -41,16 +41,19 @@ A distance of 1, means one character has to be changed.
 \section{Twitter Query Suggestion Engine}
 \textit{Fast Data in the Era of Big Data: Twitter\'s Real-Time Related Query Suggestion Architecture} is a paper that describes the architecture behind Twitter's suggestion engine \cite{twitter-suggestion}.
 One of the most important requirements for Twitter was to provide relevant search results within minutes of a event taking place.
-More precicly they wanted to register trending hashtag within 10 minutes of a event happening, and deliver the results in real-time.
+More precicly they wanted to register trending hashtags within 10 minutes of a event happening, and deliver the results in real-time.
 
 The search assistance engine have multiple features to aid the users while searching.
 Temporal information are searched to deliver information which have been popular the last day, and popular information aggregated over time.
 Secondly they have a spelling correction system, which is gathering and suggest correction for common queries.
 
-\section{Pseudo-Relevance Feedback}
+\section{Pseudo-Relevance Feedback Based on Wikipedia}
 Pseudo-relevance feedback uses information from the top-k documents to compute query expansion terms.
 However, the top-k documents are not always relevant and may introduce noise to the data set.
-\textit{Query Dependent Pseudo-Relevance Feedback based on Wikipedia} research query dependent expansion on data from Wikipedia.
+
+\textit{Query Dependent Pseudo-Relevance Feedback based on Wikipedia} explores query dependent expansion on data from Wikipedia.
 In the paper they found that different field weights had a significant impact on the precision performance.
+From the results they found high weights on the fields, "Links" and "Content" to yield very good results.
+Increasing the weights on the "Overview" field decreased precision results.
 The research explored three different methods for query expansion:
 relevance model, strategy for entity/ambiguous queries and field evidence for query expansion \cite{pseudo-relevance-wikipedia}.
