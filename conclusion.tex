@@ -4,11 +4,22 @@ This chapter discuss the query expansion implementation and compares it to Rudih
 Lastly, possible improvements are suggested to futher increase performance in terms of latency and relevance.
 
 \section{Conclusion}
-This report explored the possibilities to achieve instant search with query expansion.
-The implementation involves the search engine Elasticsearch, as it has proven to scale with large amounts of data.
+This report is based on the work by Rudihagen, and it aims to improve latency and scaleability, experienced in Rudihagen's implementation.
+To achieve lower latency we looked at how to reduce the number of round trips between the web server and the search engine.
+The new implementation lowered the number of round trips were reduced from 4 to 2.
+As a result, the latency measured with query expansion using Kullback-Leibler was 16 ms.
 
-From the results we see that the implementation
+In section \ref{sec:problem-specification} three research questions were introduced about latency, scalability and relevance.
+From the results in section \ref{sec:results} we can see that the interactivity requirement is fulfilled.
+As previously mentioned, Elasticsearch is proven to scale into petabytes of data.
+In this project the data set consisted of about 115,000.
+Based on the latency results and other use cases of Elasticsearch,
+the current implementation have potential to scale to large amounts of data.
+Before we can conclude on scalability a larger data set should be tested with the implementation from this report.
+The relevance of the results assumes to be better than the baseline.
+This assumption is base on Rudihagen's work and the research by Efron \cite{ir-hashtag}.
 
+The following section describes possible improvements to both latency and relevance.
 
 \section{Futher Work}
 After implementing a query expansion which requires two round trips, there is still room for improvement.
@@ -19,15 +30,15 @@ or implement query expansion in Lucene and expose the feature through Elasticsea
 There are photos from the dataset which doesn't contain any tags,
 and the current implementation only searches the tag field.
 This constraint means that photos without any will have the lowest document score, and thus never be visible in the results.
-To handle the problem an improved implementation should use more text features as title and description.
+To handle the problem an improved implementation should use more features like title, description, location and time.
 
-Evaluating the
-[real world setup]
+The final implementation was only tested on a local network.
+Tests where the web server and search engine are placed at a hosting provider,
+would provide a better real world result.
 
 As mentioned earlier the document relevance was not measured.
-In further work, the result's relevance should be measured, too assure that the query expansion indeed increases result relevance.
+In further work, the result's relevance should be measured, too assure that the query expansion indeed increases the results relevance.
+The current implementation uses Kullback-Leibler as a scoring function, but there are also other alternatives as Rocchio.
 
 
-[Using more features e.g. location and time]
-Implement other query expansion techniques rochio
-Use query expansion from implicit data.
+TODO: [Fix url for refereences!][??]

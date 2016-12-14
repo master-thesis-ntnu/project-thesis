@@ -56,6 +56,7 @@ The command line tool called \texttt{ab} \cite{apache-benchmark} was used to eva
 %\end{table}
 
 \section{Results}
+\label{sec:results}
 Elasticsearch caches frequently used aggregations.
 To utilize this feature of Elasticsearch the same query was sent each time.
 The query contained the top 5 most popular tags from the data set: \textit{"square", "iphoneography", "squareformat", "instagramapp", "uploaded:by=instagram"}.
@@ -122,7 +123,7 @@ The following bulletpoints contains a discussion of the research questions from 
 
 \begin{enumerate}
   %\item How to provide instant personalized recommendations on a cold start based on the query typed?
-  \item \textbf{How does the personalized recommendations give better results for the user?} \newline
+  \item \textbf{How to achieve more relevant search results based on a query from a user?} \newline
   As mentioned in section \ref{sec:problem-specification} the main focus areas were scaling and latency.
   Therefore, the relevance was never measured.
   Based on the work by Rudihagen,
