@@ -38,7 +38,7 @@ Term frequency calculation is given by Equation \ref{eq:term-frequency}.
 	\begin{equation}
 		\mathbf{tf} = \sqrt{frequency}
 	\end{equation}
-	\caption{Term frequency calculation in Elasticsearch}
+	\caption{Term frequency calculation in Elasticsearch.}
   \label{eq:term-frequency}
 \end{cequation}
 
@@ -51,7 +51,7 @@ E.g. the terms "a" and "an" often appears in a sentence but should not be given 
 	\begin{equation}
 		\mathbf{idf} = 1 + \log{[\frac{numDocs}{docFrequency + 1}]}
 	\end{equation}
-	\caption{Inverse Document Frequency calculation in Elasticsearch}
+	\caption{Inverse Document Frequency calculation in Elasticsearch.}
   \label{eq:idf}
 \end{cequation}
 
@@ -65,7 +65,7 @@ Elasticsearch's implementation is illustrated in equation \ref{eq:normalization}
 	\begin{equation}
 		\mathbf{normalization} = \frac{1}{\sqrt{numTerms}}
 	\end{equation}
-	\caption{Normalization}
+	\caption{Normalization.}
   \label{eq:normalization}
 \end{cequation}
 
@@ -78,7 +78,7 @@ A documents score in Elasticsearch is given by the Equation \ref{eq:document-sco
 	\begin{equation}
 		\mathbf{documentScore} = tf \times idf \times normalization
 	\end{equation}
-	\caption{Final document score}
+	\caption{Final document score.}
   \label{eq:document-score}
 \end{cequation}
 
@@ -98,7 +98,7 @@ A more in depth explanation is available at Elasticsearch's documentation\footno
 														& \times \sum tf(t in d) \times idf(t)^2 \times t.getBoost() \times norm(t,d)
 		\end{aligned}
 	\end{equation}
-	\caption{Equation for scoring documents when searching with multiple terms. Each variable is described in table \ref{tbl:scoring-function}}
+	\caption{Equation for scoring documents when searching with multiple terms. Each variable is described in table \ref{tbl:scoring-function}.}
   \label{eq:scoring-function}
 \end{cequation}
 
@@ -118,7 +118,7 @@ A more in depth explanation is available at Elasticsearch's documentation\footno
     \textit{getBoost}  & boost factor used on the query 		\\ \hline
     \textit{norm}      & document normalization factor  		\\ \hline
     \end{tabular}
-		\caption{Variable descriptions for equation \ref{eq:scoring-function}}
+		\caption{Variable descriptions for equation \ref{eq:scoring-function}.}
 		\label{tbl:scoring-function}
 \end{table}
 
@@ -221,7 +221,7 @@ Computing the Kullback-Leibler divergence for a term is given by equation \ref{e
 	\begin{equation}
 		\mathbf{KL}_D[P(t), Q(t)] = P(t)*\log{[\frac{P(t)}{Q(t)}]}
 	\end{equation}
-	\caption{Kullback-Leibler Divergence}
+	\caption{Kullback-Leibler Divergence.}
   \label{eq:kl-divergence}
 \end{cequation}
 
@@ -252,7 +252,7 @@ which results in an expanded query containg the terms: "sky", "clouds", "2016", 
     sea    & 1                            & 42                           & 34                             & 298,962                         \\ \hline
     water  & 1                            & 42                           & 24                             & 298,962                         \\ \hline
 \end{tabular}
-	\caption{The returned numbers for each of the top 5 terms excluding the term "sky"}
+	\caption{The returned numbers for each of the top 5 terms excluding the term "sky".}
 	\label{tbl:kl-counts}
 \end{table}
 
@@ -267,6 +267,6 @@ which results in an expanded query containg the terms: "sky", "clouds", "2016", 
     water  & 0.13553 \\ \hline
     sea    & 0.12723 \\ \hline
     \end{tabular}
-	\caption{KL divergence score of each term}
+	\caption{KL divergence score of each term.}
 	\label{tbl:kl-score}
 \end{table}
