@@ -91,17 +91,17 @@ the increased data size from Elasticsearch and from Elasticsearch itself.
 Figure \ref{fig:sequence-diagram-search-master} shows the sequence diagram for Rudihagen's query expansion solution using KL.
 From the figure we can see that 4 round trips are required from the web server, to the database and the search engine.
 The implementation discussed in Chapter \ref{ch:approach} describes a solution to decrease the number of round trips from 4 to 2.
-Even though the new implementation is able to cut the number of round trips in half, the same degree is not used.
+Even though the new implementation is able to cut the number of round trips in half, the same degree of personalization is not present.
 Rudihagen used a search where the same query may return two different results for two different users.
-The implemented query expansion in this report will always return the same results for the same query, given that the data set is equal.
+The implemented query expansion in this report will always return the same results for the same query, given that the data set is the same.
 
 Comparing table \ref{tbl:baseline} with \ref{tbl:query-expansion} we can see that the baseline delivers more than doble the number of concurrent requests.
-From the sequence diagrams in figure \ref{fig:sequence-diagram-search} and in figure \ref{fig:sequence-diagram-search-baseline} we see that the difference is the extra post processing steps.
-As a result, we can assume that most of the extra latency is mostly due to the extra query to Elasticsearch.
+From the sequence diagrams in figure \ref{fig:sequence-diagram-search} and in figure \ref{fig:sequence-diagram-search-baseline} we see that the difference is the extra post processing step.
+As a result, we can assume that most of the extra latency is mostly due to the extra round trip to Elasticsearch.
 
 In side table \ref{tbl:baseline} and \ref{tbl:query-expansion} all the results within the interactivity limit are in bold.
 The results from query expansion shows that 20 concurrent requests are within the requirement for interactivity.
-However, these results are done in an environment were all the client and the server were on the same network,
+However, these results are done in an environment were the client and the server were on the same network,
 and the web server and search engine were on the same physical machine.
 
 In a real world application the web server and search engine would be on different machines,
@@ -109,7 +109,9 @@ resulting in significantly higher latencies.
 The most interesting results are not the latency itself, but the latency ratio between the baseline and the query expansion results.
 Comparing the baseline with the query expansion result, we see about 2 times higher latencies at one concurrent request.
 For real world application, this would most likely lead to latencies exceeding the interactivity limit.
-That is because latency from the client to the web server, and from the web server to the search engine have to be taken into account.
+That is because latency from the client to the web server,
+and from the web server to the search engine have to be taken into account,
+which is not done in the test environment.
 
 
 \begin{figure}[h!]
@@ -123,7 +125,7 @@ Firstly, both the webserver and the search engine ran on the same computer.
 As a result the round trip time was almost negligible, which is often not the case in a real world environment.
 To give more realistic measurements, the solution should be tested on a cloud solution where the web server and the search engine run on different physical servers.
 
-\subsection{Evaluate Research Questions}
+\subsection{Research Question Evaluation}
 The following bulletpoints contains a discussion of the research questions from chapter \ref{ch:introduction}.
 
 \begin{enumerate}

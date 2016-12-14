@@ -4,7 +4,7 @@ This chapter discuss the query expansion implementation and compares it to Rudih
 Lastly, possible improvements are suggested to futher increase performance in terms of latency and relevance.
 
 \section{Conclusion}
-This report is based on the work by Rudihagen, and it aims to improve latency and scaleability, experienced in Rudihagen's implementation.
+This report is based on the work by Rudihagen, and it aims to improve latency and scalability, experienced in Rudihagen's implementation.
 To achieve lower latency we looked at how to reduce the number of round trips between the web server and the search engine.
 The new implementation lowered the number of round trips were reduced from 4 to 2.
 The latency measured with query expansion using Kullback-Leibler were 2 times slower than the baseline implementation.
@@ -16,7 +16,7 @@ In this project the data set consisted of about 115,000 photos.
 As previously mentioned, Elasticsearch is proven to scale into petabytes of data.
 Based on the latency results and other use cases of Elasticsearch,
 the current implementation have potential to scale to large amounts of data.
-Before we can conclude on scalability, a larger data set should be tested with on the implementation.
+Before we can conclude on scalability, a larger data set should be tested.
 Also, the document relevance of the results assumes to be better than the baseline.
 This assumption is based on Rudihagen's work and the research by Efron \cite{ir-hashtag}.
 

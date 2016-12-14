@@ -7,7 +7,6 @@ Finally, relevance feedback is described as well as how it may be used in an que
 
 \section{Technology}
 The experiment in this project report utilized a web server and a search engine as the backend.
-This section gives a brief overview of the technologies used.
 
 NodeJS\footnote{\url{https://nodejs.org}} v7 was chosen as the webserver.
 NodeJS was chosen because the author has knowledge of the technology,
@@ -145,7 +144,7 @@ and is introduced in the next two subsections.
 An example would be if the user selects the section "graphic cards" in an online store.
 Then you know that the user wants a graphic card, but this is not applicable in all type of searches
 Another approach is to use data from a user search.
-If a user clicks a search result, the result may be regarded as relevant.
+If a user clicks on a search result, the result may be regarded as relevant.
 Even though the result may not be relevant, it is a good indication.
 The problem with explicit feedback, is that it requires interaction from the user.
 
@@ -159,7 +158,7 @@ Retrieval of data to use relevance feedback requires either explicit or implicit
 Manually involving the user in the search is undesireable.
 To avoid this an approach called pseudo-relevance feedback can be used.
 Using implicit feedback requires a system which does the data collection and post process the information.
-Pseudo-relevance on the other hand, uses information from the first search, and thus gives in a simpler implementation.
+Pseudo-relevance on the other hand, uses information from the first search, and thus leads to a simpler implementation.
 
 Often the top-k documents are used to find pseudo-relevance for query expansion.
 However, the top-k documents are in many cases not relevant, and thus not suitable data for query expansion \cite{pseudo-relevance-invalid}.
