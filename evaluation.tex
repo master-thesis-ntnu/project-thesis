@@ -82,7 +82,6 @@ On the last test the number of top-k documents varied and the results are listed
 To make sure the web server was not the bottleneck, the number of concurrent requests were fixed at 10.
 As \texttt{k} increases from 10 to 200, the latency increased.
 From the table one can see that varying the \texttt{k} has little impact on the performance.
-The latency increased from below 50 ms to between 70 and 80 ms, which is still within the interactivity requirement.
 The increased latency is most likely due to the query expansion step on the web server,
 the increased data size from Elasticsearch and from Elasticsearch itself.
 
@@ -104,8 +103,14 @@ In side table \ref{tbl:baseline} and \ref{tbl:query-expansion} all the results w
 The results from query expansion shows that 20 concurrent requests are within the requirement for interactivity.
 However, these results are done in an environment were all the client and the server were on the same network,
 and the web server and search engine were on the same physical machine.
+
 In a real world application the web server and search engine would be on different machines,
 resulting in significantly higher latencies.
+The most interesting results are not the latency itself, but the latency ratio between the baseline and the query expansion results.
+Comparing the baseline with the query expansion result, we see about 2 times higher latencies at one concurrent request.
+For real world application, this would most likely lead to latencies exceeding the interactivity limit.
+That is because latency from the client to the web server, and from the web server to the search engine have to be taken into account.
+
 
 \begin{figure}[h!]
 \centering \includegraphics[width=0.9\linewidth]{img/sequence-diagram-search-master-thesis.png}
@@ -134,11 +139,13 @@ The following bulletpoints contains a discussion of the research questions from 
   if configured correctly, and was thus used as the search engine for this project report.
   Rudihagen's implementation also used Elasticsearch, and was configured with one index for each user.
   This configuration is fine for most cases, but according to the documentation this does not scale well if you have a large user base \cite{elasticsearch-indices}.
-  In the implementation a single index for the photos were used and 3 shards.
-  If the data set had been larger the number of shardes should have been changed,
-  but except for the shard configuration, the setup would be able to scale to large amounts of photo data.
+
+  Elasticsearch require proper tuning and configuration.
+  Without testing the solution on a large data we cannot conclude that the implementation would scale,
+  but the current implementation have potential to scale.
 
   \item\label{rq:latency} \textbf{How to develop a search recommendation method that fulfills the interactive requirements?} \newline
-  From the results we can see that the implementation is within the interactivity requirement of 100 ms, delivering results within 16 ms on average, given one concurrent request.
-  The implementation is able to fullfill the interactivity requirement with up to 20 concurrent requests.
+  From the results we can see that the implementation are delivering results in about 16 ms, in a test environment.
+  However, the query expansion implementation has a latency which is about 2 times greater than the baseline.
+  For real world use cases, this might exceed the latency to above the interactivity limit.
 \end{enumerate}

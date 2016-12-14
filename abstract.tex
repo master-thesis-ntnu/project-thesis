@@ -7,14 +7,14 @@ Results have to arrive within 100 ms for interactive tasks like search.
 Query expansion may be used to aid the user when searching,
 but extracting relevant information to use with query expansion may sometimes be a challenge.
 A technique called pseudo-relevance feedback have shown to provide good results in terms of relevance.
-In microblog environments tags provide a good source indication on which documents are relevant.
 There are a considerable amount of research on pseudo-relevance feedback and query expansion.
-However, the focus is rarely on speed and scaleability, but mostly on relevance.
+However, the focus is rarely on speed and scaleability.
+
+With the increasing amounts of data, scalable implementations are important to handle the all the data.
+Speed has proven to be an important factor for web services.
+The company Amazon even states that 100 ms in latency leads to 1\% in earnings.
 
 This project report utilize the search engine Elasticsearch,
 comined with a techique called pseudo-relevance feeback to implement query expansion.
-About 115,000 photos from Flickr has been tested with the implemented search.
-We will see that the search results arrive well within the requirement for interactive tasks,
+We will see that the latency results show great potential, and may be used with interactive tasks,
 even when the amount of data increases.
-
-TODO: [??]
